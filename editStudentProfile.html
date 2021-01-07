@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>Student Profile</title>
+    <script src="./js/searchJobs.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-md">
+                <a class="navbar-brand" href="/index">PLADAT</a>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="./studentProfile.html">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./searchJobs.html">Search Jobs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./login.html">Log out</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container-md" style="padding-top: 160px;">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1" style="width: 120px;">Name</span>
+                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1" style="width: 120px;">E-mail</span>
+                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1" style="width: 120px;">Age</span>
+                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1" style="width: 120px;">Department</span>
+                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1" style="width: 120px;">University</span>
+                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1" style="width: 120px;">City</span>
+                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">Employment Type</label>
+                    <select class="form-select" id="inputGroupSelect01">
+                      <option selected>All</option>
+                      <option value="1">Part Time</option>
+                      <option value="2">Full Time</option>
+                    </select>
+                  </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="input-group">
+                    <span class="input-group-text">Add Skill</span>
+                    <input type="text" aria-label="First name" class="form-control" placeholder="Skill Name">
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="input-group">
+                    <textarea placeholder="Skill Description" class="form-control" aria-label="With textarea"></textarea>
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-4"></div>
+            <div class="col-2" style="padding-top: 20px;">
+                <button class="btn btn-primary">Add Skill</button>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Skill</th>
+                        <th scope="col">Description</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>Java</td>
+                        <td>Programming Language</td>
+                        <td><button class="btn btn-primary">Remove</button></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>Python</td>
+                        <td>Programming Language</td>
+                        <td><button class="btn btn-primary">Remove</button></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td>C++</td>
+                        <td>Programming Language</td>
+                        <td><button class="btn btn-primary">Remove</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-5"></div>
+            <div class="col-1">
+                <button class="btn btn-primary">Save</button>
+            </div>
+            <div class="col-3"></div>
+        </div>
+
+
+
+
+        
+
+    </div>
+   
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+  </body>
+</html>
