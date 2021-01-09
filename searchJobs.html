@@ -40,7 +40,8 @@
 
     <div class="container-md" style="padding-top: 60px;">
         <div class="row">
-          <div class="col-9">
+          <div class="col-8 text-center">
+            <h3>Jobs</h3>
             <table class="table table-hover">
                 <thead>
                   <tr>
@@ -59,7 +60,7 @@
                     <td>Istanbul Avrupa</td>
                     <td>
                         <button onclick="showModal();" id="detailsBtn1" type="button" class="btn btn-info">Details</button>
-                        <button type="button" class="btn btn-light">Apply</button>
+                        <button type="button" class="btn btn-success">Apply</button>
                     </td>
                   </tr>
                   <tr>
@@ -69,7 +70,7 @@
                     <td>Istanbul Asya</td>
                     <td>
                         <button type="button" class="btn btn-info">Details</button>
-                        <button type="button" class="btn btn-light">Apply</button>
+                        <button type="button" class="btn btn-success">Apply</button>
                     </td>
                   </tr>
                   <tr>
@@ -79,14 +80,39 @@
                     <td>Kocaeli</td>
                     <td>
                         <button type="button" class="btn btn-info">Details</button>
-                        <button type="button" class="btn btn-light">Apply</button>
+                        <button type="button" class="btn btn-success">Apply</button>
                     </td>
                   </tr>
                 </tbody>
               </table>
           </div>
-          <div class="col-3">
-            <p>Notifications</p>
+          <div class="col-4 text-center">
+            <h3>Offers</h3>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Company</th>
+                  <th scope="col">   </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Company A</td>
+                  <td>
+                      <button onclick="showModalOffer();" id="detailsBtn1" type="button" class="btn btn-info">Details</button>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Company B</td>
+                  <td>
+                      <button onclick="showModalOffer();" id="detailsBtn1" type="button" class="btn btn-info">Details</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>    
         </div>
     </div>
