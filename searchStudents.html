@@ -11,20 +11,20 @@
     <!-- jquery for model open fnction to work -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
-    <title>Search Jobs</title>
-    <script src="./js/searchJobs.js"></script>
+    <title>Search Students</title>
+    <script src="./js/searchStudents.js"></script>
   </head>
   <body>
     <div class="container-fluid">
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <div class="container-md">
-                <a class="navbar-brand" href="./searchJobs.html">PLADAT</a>
+                <a class="navbar-brand" href="./searchStudents.html">PLADAT</a>
                 <ul class="navbar-nav">
                     <li class="nav-item ">
-                        <a class="nav-link" href="./studentProfile.html">Profile</a>
+                        <a class="nav-link" href="./companyProfile.html">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="./searchJobs.html">Search Jobs</a>
+                        <a class="nav-link active" href="./searchStudents.html">Search Students</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./login.html">Log out</a>
@@ -35,7 +35,7 @@
     </div>
 
     <div class="container-md" style="padding-top: 60px;">
-        <button type="button" class="btn btn-primary btn-lg" style="margin:auto;display:block">SEARCH FOR JOBS</button>
+        <button type="button" class="btn btn-primary btn-lg" style="margin:auto;display:block">SEARCH FOR STUDENTS</button>
     </div>
 
     <div class="container-md" style="padding-top: 60px;">
@@ -45,41 +45,23 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Job Title</th>
-                    <th scope="col">Company</th>
-                    <th scope="col">Location</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">University</th>
+                    <th scope="col">Department</th>
                     <th scope="col">   </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <th scope="row">1</th>
-                    <td>Java Developer</td>
-                    <td>A Company</td>
-                    <td>Istanbul Avrupa</td>
+                    <td>Burak AKIN</td>
+                    <td>23</td>
+                    <td>Istanbul Technical University</td>
+                    <td>Computer Engineering</td>
                     <td>
                         <button onclick="showModal();" id="detailsBtn1" type="button" class="btn btn-info">Details</button>
-                        <button type="button" class="btn btn-light">Apply</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Python Developer</td>
-                    <td>B Company</td>
-                    <td>Istanbul Asya</td>
-                    <td>
-                        <button type="button" class="btn btn-info">Details</button>
-                        <button type="button" class="btn btn-light">Apply</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>C++ Developer</td>
-                    <td>C Company</td>
-                    <td>Kocaeli</td>
-                    <td>
-                        <button type="button" class="btn btn-info">Details</button>
-                        <button type="button" class="btn btn-light">Apply</button>
+                        <button type="button" class="btn btn-success">Offer</button>
                     </td>
                   </tr>
                 </tbody>

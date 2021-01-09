@@ -27,4 +27,3 @@ function showModal(){
     $('#exampleModal').modal('show')
     
 };
-

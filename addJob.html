@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
-    <title>Edit Student Profile</title>
+    <title>Add a Job</title>
     <script src="./js/editStudentProfile.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
   </head>
@@ -16,13 +16,13 @@
     <div class="container-fluid">
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <div class="container-md">
-                <a class="navbar-brand" href="./searchJobs.html">PLADAT</a>
+                <a class="navbar-brand" href="./searchStudents.html">PLADAT</a>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="./studentProfile.html">Profile</a>
+                        <a class="nav-link active" href="./companyProfile.html">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./searchJobs.html">Search Jobs</a>
+                        <a class="nav-link" href="./searchStudents.html">Search Students</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./login.html">Log out</a>
@@ -37,7 +37,7 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Name</span>
+                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Job Description</span>
                     <input type="text" class="form-control" aria-describedby="basic-addon1">
                 </div>
             </div>
@@ -47,7 +47,7 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">E-mail</span>
+                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Location</span>
                     <input type="text" class="form-control" aria-describedby="basic-addon1">
                 </div>
             </div>
@@ -57,61 +57,22 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Age</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
-                </div>
-            </div>
-            <div class="col-2"></div>
-        </div>
-        <div class="row">
-            <div class="col-2"></div>
-            <div class="col-8">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Department</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
-                </div>
-            </div>
-            <div class="col-2"></div>
-        </div>
-        <div class="row">
-            <div class="col-2"></div>
-            <div class="col-8">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">University</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
-                </div>
-            </div>
-            <div class="col-2"></div>
-        </div>
-        <div class="row">
-            <div class="col-2"></div>
-            <div class="col-8">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">City</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
-                </div>
-            </div>
-            <div class="col-2"></div>
-        </div>
-        <div class="row">
-            <div class="col-2"></div>
-            <div class="col-8">
-                <div class="input-group mb-3">
-                    <label class="input-group-text" for="inputGroupSelect01" style="width: 155px;">Employment Type</label>
+                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Employment Type</span>
                     <select class="form-select" id="inputGroupSelect01">
-                      <option selected>All</option>
-                      <option value="1">Part Time</option>
-                      <option value="2">Full Time</option>
-                    </select>
-                  </div>
+                        <option selected>All</option>
+                        <option value="1">Part Time</option>
+                        <option value="2">Full Time</option>
+                      </select>
+                </div>
             </div>
             <div class="col-2"></div>
         </div>
+        
         <div class="row">
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group">
-                    <span class="input-group-text" style="width: 155px;">Add Skill</span>
+                    <span class="input-group-text" style="width: 155px;">Add Requirements</span>
                     <input type="text" aria-label="First name" class="form-control" placeholder="Skill Name">
                 </div>
             </div>
@@ -130,7 +91,7 @@
             <div class="col-2"></div>
             <div class="col-6"></div>
             <div class="col-2" style="padding-top: 20px;">
-                <button class="btn btn-primary">Add Skill</button>
+                <button class="btn btn-primary">Add Requirement</button>
             </div>
             <div class="col-2"></div>
         </div>
@@ -141,7 +102,7 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Skill</th>
+                        <th scope="col">Requirement</th>
                         <th scope="col">Description</th>
                         <th scope="col"></th>
                       </tr>
@@ -174,7 +135,7 @@
             <div class="col-2"></div>
             <div class="col-7"></div>
             <div class="col-1">
-                <button class="btn btn-primary" onclick="window.location.href='./studentProfile.html';">Save</button>
+                <button class="btn btn-primary" onclick="window.location.href='./companyProfile.html';">Save</button>
             </div>
             <div class="col-2"></div>
         </div>

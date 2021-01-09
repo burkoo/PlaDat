@@ -8,19 +8,24 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
-    <title>Student Profile</title>
+    <!-- jquery for model open fnction to work -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <title>Company Profile</title>
+    <script src="./js/companyProfile.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
   </head>
   <body>
     <div class="container-fluid">
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <div class="container-md">
-                <a class="navbar-brand" href="./searchJobs.html">PLADAT</a>
+                <a class="navbar-brand" href="./searchStudents.html">PLADAT</a>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="./studentProfile.html">Profile</a>
+                        <a class="nav-link active" href="./companyProfile.html">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./searchJobs.html">Search Jobs</a>
+                        <a class="nav-link" href="./searchStudents.html">Search Students</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./login.html">Log out</a>
@@ -29,13 +34,14 @@
             </div>
         </nav>
     </div>
+
     <div class="container-md" style="padding-top: 160px;">
         <div class="row">
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Name</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="Burak AKIN" disabled>
+                    <span class="input-group-text" id="basic-addon1" style="width: 150px;">Company Name</span>
+                    <input type="text" class="form-control" aria-describedby="basic-addon1" disabled>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -44,8 +50,8 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">E-mail</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="hbakin98@gmail.com"disabled>
+                    <span class="input-group-text" id="basic-addon1" style="width: 150px;">E-mail</span>
+                    <input type="text" class="form-control" aria-describedby="basic-addon1" disabled>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -54,8 +60,8 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Age</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="23" disabled>
+                    <span class="input-group-text" id="basic-addon1" style="width: 150px;">City</span>
+                    <input type="text" class="form-control" aria-describedby="basic-addon1" disabled>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -64,8 +70,8 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Department</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="Computer Engineering" disabled>
+                    <span class="input-group-text" id="basic-addon1" style="width: 150px;">Employer Name</span>
+                    <input type="text" class="form-control" aria-describedby="basic-addon1" disabled>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -74,8 +80,8 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">University</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="Istanbul Technical University" disabled>
+                    <span class="input-group-text" id="basic-addon1" style="width: 150px;">Employer Id</span>
+                    <input type="text" class="form-control" aria-describedby="basic-addon1" disabled>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -84,19 +90,9 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">City</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="Istanbul" disabled>
+                    <span class="input-group-text" id="basic-addon1" style="width: 150px;">Employer Age</span>
+                    <input type="text" class="form-control" aria-describedby="basic-addon1" disabled>
                 </div>
-            </div>
-            <div class="col-2"></div>
-        </div>
-        <div class="row">
-            <div class="col-2"></div>
-            <div class="col-8">
-                <div class="input-group mb-3">
-                    <label class="input-group-text" for="inputGroupSelect01" style="width: 155px;">Employment Type</label>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="Full Time" disabled>
-                  </div>
             </div>
             <div class="col-2"></div>
         </div>
@@ -108,25 +104,26 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Skill</th>
-                        <th scope="col">Description</th>
+                        <th scope="col">Job</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Employment Type</th>
+                        <th scope="col"></th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
                         <th scope="row">1</th>
-                        <td>Java</td>
-                        <td>Programming Language</td>
+                        <td>Junior Java Developer</td>
+                        <td>Istanbul</td>
+                        <td>Part-Time</td>
+                        <td><button onclick="showModal();" id="descBtn1" class="btn btn-info">Description</i></button></td>
                       </tr>
                       <tr>
                         <th scope="row">2</th>
-                        <td>Python</td>
-                        <td>Programming Language</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>C++</td>
-                        <td>Programming Language</td>
+                        <td>Senior C++ Developer</td>
+                        <td>Ankara</td>
+                        <td>Full-Time</td>
+                        <td><button class="btn btn-info">Description</i></button></td>
                       </tr>
                     </tbody>
                   </table>
@@ -137,14 +134,31 @@
             <div class="col-2"></div>
             <div class="col-7"></div>
             <div class="col-1">
-                <button class="btn btn-primary" onclick="window.location.href='./editStudentProfile.html';">Edit</button>
+                <button class="btn btn-primary" onclick="window.location.href='./editCompanyProfile.html';">Edit</button>
             </div>
             <div class="col-2"></div>
         </div>
+    </div>
 
 
-
-
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Java Developer in A Company</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Apply</button>
+                </div>
+            </div>
+        </div> -->
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
