@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
+    <script src="./js/studentProfile.js"></script>
     <title>Student Profile</title>
   </head>
   <body style="background-color:rgb(235, 235, 235);">
@@ -34,8 +35,8 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Name</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="Burak AKIN" disabled>
+                    <span class="input-group-text" style="width: 155px;">Name</span>
+                    <input  id="name" type="text" class="form-control" aria-describedby="basic-addon1" disabled>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -44,8 +45,8 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">E-mail</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="hbakin98@gmail.com"disabled>
+                    <span class="input-group-text" style="width: 155px;">Age</span>
+                    <input  id="age" type="text" class="form-control" aria-describedby="basic-addon1" disabled>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -54,8 +55,8 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Age</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="23" disabled>
+                    <span class="input-group-text" style="width: 155px;">University</span>
+                    <input id="university" type="text" class="form-control" aria-describedby="basic-addon1" disabled>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -64,8 +65,8 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Department</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="Computer Engineering" disabled>
+                    <span class="input-group-text" style="width: 155px;">Faculty</span>
+                    <input  id="faculty" type="text" class="form-control" aria-describedby="basic-addon1" disabled>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -74,8 +75,8 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">University</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="Istanbul Technical University" disabled>
+                    <span class="input-group-text" style="width: 155px;">Department</span>
+                    <input id="department" type="text" class="form-control" aria-describedby="basic-addon1" disabled>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -85,8 +86,8 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Grade</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="4th Grade" disabled>
+                    <span class="input-group-text" style="width: 155px;">Grade</span>
+                    <input id="grade" type="text" class="form-control" aria-describedby="basic-addon1" disabled>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -95,8 +96,8 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">City</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="Istanbul" disabled>
+                    <span class="input-group-text" style="width: 155px;">City</span>
+                    <input id="city" type="text" class="form-control" aria-describedby="basic-addon1" disabled>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -105,8 +106,8 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <label class="input-group-text" for="inputGroupSelect01" style="width: 155px;">Employment Type</label>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="Full Time" disabled>
+                    <label class="input-group-text" style="width: 155px;">Employment Type</label>
+                    <input id="employmentType" type="text" class="form-control" aria-describedby="basic-addon1" disabled>
                   </div>
             </div>
             <div class="col-2"></div>
@@ -123,8 +124,8 @@
                         <th scope="col">Description</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
+                    <tbody id="skillsTableBody">
+                      <!-- <tr>
                         <th scope="row">1</th>
                         <td>Java</td>
                         <td>Programming Language</td>
@@ -138,7 +139,7 @@
                         <th scope="row">3</th>
                         <td>C++</td>
                         <td>Programming Language</td>
-                      </tr>
+                      </tr> -->
                     </tbody>
                   </table>
             </div>
@@ -146,7 +147,9 @@
         </div>
         <div class="row" style="padding-bottom: 100px;">
             <div class="col-2"></div>
-            <div class="col-7"></div>
+            <div class="col-7">
+                <!-- <button class="btn btn-primary" onclick="getUserId();">Get Id</button> -->
+            </div>
             <div class="col-1">
                 <button class="btn btn-primary" onclick="window.location.href='./editStudentProfile.html';">Edit</button>
             </div>

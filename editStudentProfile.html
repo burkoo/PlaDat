@@ -38,17 +38,7 @@
             <div class="col-8">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 155px;">Name</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
-                </div>
-            </div>
-            <div class="col-2"></div>
-        </div>
-        <div class="row">
-            <div class="col-2"></div>
-            <div class="col-8">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">E-mail</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                    <input id="name" type="text" class="form-control" aria-describedby="basic-addon1">
                 </div>
             </div>
             <div class="col-2"></div>
@@ -58,17 +48,7 @@
             <div class="col-8">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 155px;">Age</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
-                </div>
-            </div>
-            <div class="col-2"></div>
-        </div>
-        <div class="row">
-            <div class="col-2"></div>
-            <div class="col-8">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Department</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                    <input id="age" type="text" class="form-control" aria-describedby="basic-addon1">
                 </div>
             </div>
             <div class="col-2"></div>
@@ -78,7 +58,7 @@
             <div class="col-8">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 155px;">University</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                    <input id="university" type="text" class="form-control" aria-describedby="basic-addon1">
                 </div>
             </div>
             <div class="col-2"></div>
@@ -87,8 +67,29 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Faculty</span>
+                    <input id="faculty" type="text" class="form-control" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Department</span>
+                    <input id="department" type="text" class="form-control" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-2"></div>
+        </div>
+        
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 155px;">Grade</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                    <input id="grade" type="text" class="form-control" aria-describedby="basic-addon1">
                 </div>
             </div>
             <div class="col-2"></div>
@@ -98,7 +99,17 @@
             <div class="col-8">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 155px;">City</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                    <input id="city" type="text" class="form-control" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1" style="width: 155px;">Country</span>
+                    <input id="country" type="text" class="form-control" aria-describedby="basic-addon1">
                 </div>
             </div>
             <div class="col-2"></div>
@@ -108,10 +119,10 @@
             <div class="col-8">
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="inputGroupSelect01" style="width: 155px;">Employment Type</label>
-                    <select class="form-select" id="inputGroupSelect01">
-                      <option selected>All</option>
-                      <option value="1">Part Time</option>
-                      <option value="2">Full Time</option>
+                    <select class="form-select" id="employmentType">
+                      <option value="All">All</option>
+                      <option value="Part Time">Part Time</option>
+                      <option value="Full Time">Full Time</option>
                     </select>
                   </div>
             </div>
@@ -156,8 +167,8 @@
                         <th scope="col"></th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
+                    <tbody id="skillsTableBody">
+                      <!-- <tr>
                         <th scope="row">1</th>
                         <td>Java</td>
                         <td>Programming Language</td>
@@ -174,7 +185,7 @@
                         <td>C++</td>
                         <td>Programming Language</td>
                         <td><button class="btn btn-light"><i class='fas fa-trash-alt'></i></td>
-                      </tr>
+                      </tr> -->
                     </tbody>
                   </table>
             </div>
@@ -184,7 +195,7 @@
             <div class="col-2"></div>
             <div class="col-7"></div>
             <div class="col-1">
-                <button class="btn btn-primary" onclick="window.location.href='./studentProfile.html';">Save</button>
+                <button class="btn btn-primary" onclick="saveButtonListener();">Save</button>
             </div>
             <div class="col-2"></div>
         </div>
