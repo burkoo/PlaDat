@@ -34,6 +34,7 @@ window.onload = function(){
             }
             if(response.city != null){
                 document.getElementById("city").value = response.city;
+                document.getElementById("country").value = getCountry(searchCity(response.city));
             }
             if(response.emp_pref != null){
                 document.getElementById("employmentType").value = response.emp_pref;
@@ -63,7 +64,7 @@ function saveButtonListener(){
     updateEmploymentType(document.getElementById("employmentType").value);
     
 
-    // window.location.href='./studentProfile.html';
+    window.location.href='./studentProfile.html';
 }
 
 function updateAge(age){
@@ -130,7 +131,7 @@ function updateCity(city){
     // send request
     var userId = getUserId();
 
-    var city_id = searchCity(city);
+    var city_id = searchCityWithAdd(city);
 
     var finalURL = baseURL + "/student_update?" + "type=city" + "&stu_id=" + userId + "&city_id=" + city_id;
     
@@ -145,7 +146,7 @@ function updateCity(city){
 
 }
 
-function searchCity(city){
+function searchCityWithAdd(city){
     // search city 
     var finalURL = baseURL + "/search_city?" + "term=" + city;
     var city_id;
@@ -203,4 +204,43 @@ function updateEmploymentType(empType){
     // };
     xmlhttp.send();
 
+}
+
+function getCountry(city_id){
+
+    var country;
+
+    var finalURL = baseURL + "/cities?" + "id=" + city_id;
+    
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+            country = response.cities[0].country;
+        }
+    };
+    xmlhttp.send();
+
+    return country;
+}
+
+function searchCity(city){
+    // search city 
+    var finalURL = baseURL + "/search_city?" + "term=" + city;
+    var city_id = -1;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+            var cities = response.cities;
+            if(cities.length != 0){
+                city_id = cities[0].id
+            }
+        }
+    };
+    xmlhttp.send();
+
+    return city_id;
 }
