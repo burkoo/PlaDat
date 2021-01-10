@@ -8,6 +8,9 @@
 	<!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
+    <!-- jquery for model open fnction to work -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
 	<script src="./js/signUp.js"></script>
 </head>
 <body style="background-color:rgb(235, 235, 235);">
@@ -36,9 +39,9 @@
             <div class="col-6">
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="inputGroupSelect01" style="width: 155px;">User Type</label>
-                    <select class="form-select" id="inputGroupSelect01">
-                      <option value="1">Student</option>
-                      <option value="2">Employer</option>
+                    <select class="form-select" id="userTypeInput">
+                      <option value="s">Student</option>
+                      <option value="e">Employer</option>
                     </select>
                   </div>
             </div>
@@ -49,7 +52,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 155px;">Fullname</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="Fullname">
+                    <input id="fullnameInput" type="text" class="form-control" aria-describedby="basic-addon1" placeholder="Fullname">
                 </div>
             </div>
             <div class="col-3"></div>
@@ -59,7 +62,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 155px;">E-mail</span>
-                    <input type="email" class="form-control" aria-describedby="basic-addon1" placeholder="E-mail">
+                    <input id="emailInput" type="email" class="form-control" aria-describedby="basic-addon1" placeholder="E-mail">
                 </div>
             </div>
             <div class="col-3"></div>
@@ -69,7 +72,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 155px;">Password</span>
-                    <input type="password" class="form-control" aria-describedby="basic-addon1" placeholder="Password">
+                    <input id="passwdInput" type="password" class="form-control" aria-describedby="basic-addon1" placeholder="Password">
                 </div>
             </div>
             <div class="col-3"></div>
@@ -79,7 +82,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 155px;">Confirm Password</span>
-					<input type="password" class="form-control" aria-describedby="basic-addon1" placeholder="Confirm Password">
+					<input id="confirmPasswdInput" type="password" class="form-control" aria-describedby="basic-addon1" placeholder="Confirm Password">
                 </div>
             </div>
             <div class="col-3"></div>
@@ -87,7 +90,7 @@
         <div class="row">
             <div class="col-3"></div>
 			<div class="col-6 text-center">
-                <button class="btn btn-primary">Sign Up</button>
+                <button class="btn btn-primary" onclick="signUp()">Sign Up</button>
             </div>
             <div class="col-3"></div>
 		</div>
@@ -98,7 +101,11 @@
 			</div>
             <div class="col-3"></div>
         </div>
-	</div>    
+    </div>    
+    
+    <!-- Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
 		
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
