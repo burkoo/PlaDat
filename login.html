@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V15</title>
+	<title>Login PlaDat</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -36,9 +36,9 @@
             <div class="col-6">
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="inputGroupSelect01" style="width: 155px;">User Type</label>
-                    <select class="form-select" id="inputGroupSelect01">
-                      <option value="1">Student</option>
-                      <option value="2">Employer</option>
+                    <select class="form-select" id="userTypeInput">
+                      <option value="s">Student</option>
+                      <option value="e">Employer</option>
                     </select>
                   </div>
             </div>
@@ -49,7 +49,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 155px;">E-mail</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="E-mail">
+                    <input id="emailInput" type="text" class="form-control" aria-describedby="basic-addon1" placeholder="E-mail">
                 </div>
             </div>
             <div class="col-3"></div>
@@ -59,7 +59,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 155px;">Password</span>
-                    <input type="password" class="form-control" aria-describedby="basic-addon1" placeholder="Password">
+                    <input id="passwdInput" type="password" class="form-control" aria-describedby="basic-addon1" placeholder="Password">
                 </div>
             </div>
             <div class="col-3"></div>
@@ -67,7 +67,7 @@
         <div class="row">
             <div class="col-3"></div>
 			<div class="col-6 text-center">
-                <button class="btn btn-primary">Login</button>
+                <button onclick="login();" class="btn btn-primary">Login</button>
             </div>
             <div class="col-3"></div>
 		</div>

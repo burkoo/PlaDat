@@ -23,11 +23,15 @@ function signUp(){
         if(passwd != cpasswd){
             alert("Passwords don't match !");
         } else {
-            // msg = userType + fullname + email + passwd + cpasswd;
-            // alert(msg);
             // send signup request
 
-            var finalURL = baseURL + "/ssignup?" + "name=" + fullname + "&email=" + email + "&pw=" + passwd;
+            var finalURL;
+
+            if(userType == "s"){
+                finalURL = baseURL + "/ssignup?" + "name=" + fullname + "&email=" + email + "&pw=" + passwd;
+            } else {
+                finalURL = baseURL + "/esignup?" + "name=" + fullname + "&email=" + email + "&pw=" + passwd;
+            }
 
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.open("POST",finalURL,true);
