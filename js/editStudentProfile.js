@@ -25,6 +25,7 @@ window.onload = function(){
             }
             if(response.university != null){
                 document.getElementById("university").value = response.university;
+                document.getElementById("university_city").value = searchUniCity(response.university);
             }
             if(response.faculty != null){
                 document.getElementById("faculty").value = response.faculty;
@@ -54,10 +55,8 @@ window.onload = function(){
 function saveButtonListener(){
     // save request
 
-    var uniName = document.getElementById("university").value;
-    var faculty = document.getElementById("faculty").value;
-    var department = document.getElementById("department").value;
-
+    updateUniversity(document.getElementById("university").value);
+    updateDepartment(document.getElementById("department").value);
     updateCity(document.getElementById("city").value);
     updateGrade(document.getElementById("grade").value);
     updateAge(document.getElementById("age").value);
@@ -84,17 +83,15 @@ function updateAge(age){
     xmlhttp.send();
 
 }
-function updateUniversity(uniName){
+function updateUniversity(university){
     // send request
     var userId = getUserId();
 
-    // search uni first, if doesnt exist create
+    var uni_id = searchUniversityWithAdd(university);
 
-    // var uniId = 
-    
-    var finalURL = baseURL + "/student_update?" + "type=uni" + "&stu_id=" + userId + "&uni_id=" + uniId;
-    
-    var xmlhttp = new XMLHttpRequest();
+    var finalURL = baseURL + "/student_update?" + "type=uni" + "&stu_id=" + userId + "&uni_id=" + uni_id;
+
+    xmlhttp = new XMLHttpRequest();
     xmlhttp.open("POST",finalURL,false);
     // xmlhttp.onreadystatechange = function() {
     //     if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
@@ -106,7 +103,21 @@ function updateUniversity(uniName){
 }
 
 function updateDepartment(department){
-    // save request
+    // send request
+    var userId = getUserId();
+
+    var dep_id = searchDepartmentWithAdd(department);
+
+    var finalURL = baseURL + "/student_update?" + "type=dep" + "&stu_id=" + userId + "&dep_id=" + dep_id;
+
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST",finalURL,false);
+    // xmlhttp.onreadystatechange = function() {
+    //     if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+    //         var response = JSON.parse(xmlhttp.responseText);
+    //     }
+    // };
+    xmlhttp.send();
 
 }
 function updateGrade(grade){
@@ -171,6 +182,7 @@ function searchCityWithAdd(city){
 
 function addCity(city){
     alert("in add city");
+    var city_id = -1;
     var country = document.getElementById("country").value
     var url = baseURL + "/add_city?" + "name=" + city + "&country=" + country;
     var xmlhttp = new XMLHttpRequest();
@@ -243,4 +255,113 @@ function searchCity(city){
     xmlhttp.send();
 
     return city_id;
+}
+
+function searchDepartmentWithAdd(department){
+    // search department 
+    var finalURL = baseURL + "/search_department?" + "term=" + department;
+    var dep_id;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+            var departments = response.departments;
+            if(departments.length == 0){
+                alert("new department needed");
+                dep_id = addDepartment(department);
+            } else {
+                dep_id = departments[0].id
+            }
+        }
+    };
+    xmlhttp.send();
+
+    return dep_id;
+}
+
+function addDepartment(department){
+    alert("in add department");
+    var dep_id = -1;
+    var faculty = document.getElementById("faculty").value
+    var url = baseURL + "/add_department?" + "name=" + department + "&faculty=" + faculty;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST",url,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+                var response = JSON.parse(xmlhttp.responseText);
+                // use returned department_id
+                alert(response.department_id);
+                dep_id = response.department_id;
+        }
+    };
+    xmlhttp.send();
+
+    return dep_id;
+}
+
+function searchUniversityWithAdd(university){
+    // search university 
+    var finalURL = baseURL + "/search_uni?" + "term=" + university;
+    var uni_id;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+            var universities = response.universities;
+            if(universities.length == 0){
+                alert("new university needed");
+                uni_id = addUniversity(university);
+            } else {
+                uni_id = universities[0].id
+            }
+        }
+    };
+    xmlhttp.send();
+
+
+
+    return uni_id;
+}
+
+function addUniversity(university){
+    alert("in add university");
+    var uni_id = -1;
+    var uni_city = document.getElementById("university_city").value;
+    var city_id = searchCityWithAdd(uni_city);
+    var url = baseURL + "/add_uni?" + "name=" + university + "&city_id=" + city_id;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST",url,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+                var response = JSON.parse(xmlhttp.responseText);
+                // use returned department_id
+                alert(response.uni_id);
+                uni_id = response.uni_id;
+        }
+    };
+    xmlhttp.send();
+
+    return uni_id;
+}
+
+function searchUniCity(university){
+    // search city 
+    var finalURL = baseURL + "/search_uni?" + "term=" + university;
+    var uni_city = -1;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+            var universities = response.universities;
+            if(universities.length != 0){
+                uni_city = universities[0].city;
+            }
+        }
+    };
+    xmlhttp.send();
+
+    return uni_city;
 }
