@@ -1,4 +1,5 @@
 var baseURL = "http://127.0.0.1:9090";
+var skillTableCounter = 0;
 
 function getUserId(){
     const USER_ID = sessionStorage.getItem('userID');
@@ -365,3 +366,60 @@ function searchUniCity(university){
 
     return uni_city;
 }
+
+
+function addSkill(){
+
+    var skillName = document.getElementById("skill_name").value;
+    var skillDesc = document.getElementById("skill_desc").value;
+
+    alert("in add skill");
+
+    var skill_id = -1;
+    var url = baseURL + "/add_skill?" + "name=" + skillName + "&desc=" + skillDesc;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST",url,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+                var response = JSON.parse(xmlhttp.responseText);
+                // use returned department_id
+                // alert(response.skill_id);
+                // skill_id = response.skill_id;
+                addSkillToTable(skillName,skillDesc);
+                // add skill to student
+        }
+    };
+    xmlhttp.send();
+
+    document.getElementById("skill_name").value = "";
+    document.getElementById("skill_desc").value = "";
+
+}
+
+function addSkillToTable(skillName,skillDesc){
+
+    skillTableCounter += 1;
+
+    var skillTableRow;
+
+    skillTableRow = '<tr><th scope="row">';
+    skillTableRow += skillTableCounter.toString();
+    skillTableRow += '</th><td>';
+    skillTableRow += skillName;
+    skillTableRow += '</td><td>';
+    skillTableRow += skillDesc;
+    skillTableRow += '</td><td><button onclick="deleteRow(this);" class="btn btn-light"><i class=\'fas fa-trash-alt\'></i></button></td></tr>';
+    // <tr>
+    //     <th scope="row">1</th>
+    //     <td>Java</td>
+    //     <td>Programming Language</td>
+    //     <td><button onclick="deleteRow(this);" class="btn btn-light"><i class='fas fa-trash-alt'></i></button></td>
+    // </tr>
+
+    document.getElementById("skillsTableBody").insertAdjacentHTML('beforeend', skillTableRow);
+}
+
+function deleteRow(r) {
+    var i = r.parentNode.parentNode.rowIndex;
+    document.getElementById("skillsTable").deleteRow(i);
+  }
