@@ -1,4 +1,5 @@
 var baseURL = "http://127.0.0.1:9090";
+var skillTableCounter = 0;
 
 function getUserId(){
     const USER_ID = sessionStorage.getItem('userID');
@@ -43,9 +44,38 @@ window.onload = function(){
                 document.getElementById("grade").value = response.grade;
             }
 
-            // if(response.skills != null){
-            //     document.getElementById("skillsTableBody").value = response.grade;
-            // }
+            if(response.skills != null){
+                for (let index = 0; index < response.skills.length; index++) {
+                    var splitted_text = response.skills[index].split(":");
+
+                    if(splitted_text[0] == ""){
+                        break;
+                    }
+
+                    var skill_id = splitted_text[0];
+                    var skillName = splitted_text[1];
+                    var skillDesc = splitted_text[2];
+
+                    skillTableCounter += 1;
+
+                    var skillTableRow;
+                    skillTableRow = '<tr><th scope="row">';
+                    skillTableRow += skillTableCounter.toString();
+                    skillTableRow += '</th><td>';
+                    skillTableRow += skillName;
+                    skillTableRow += '</td><td>';
+                    skillTableRow += skillDesc;
+                    skillTableRow += '</tr>';
+                    // <tr>
+                    //     <th scope="row">1</th>
+                    //     <td>Java</td>
+                    //     <td>Programming Language</td>
+                    // </tr>
+
+                    document.getElementById("skillsTableBody").insertAdjacentHTML('beforeend', skillTableRow);
+                    
+                }
+            }
         }
     };
     xmlhttp.send();
