@@ -27,3 +27,9 @@ function showModal(){
     $('#exampleModal').modal('show')
     
 };
+
+
+function editJob(job_id){
+
+    // sessionStorage.setItem('jobId', job_id);  // SO IMPORTANT
+}
