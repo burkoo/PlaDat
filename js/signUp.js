@@ -30,7 +30,7 @@ function signUp(){
             if(userType == "s"){
                 finalURL = baseURL + "/ssignup?" + "name=" + fullname + "&email=" + email + "&pw=" + passwd;
             } else {
-                finalURL = baseURL + "/csignup?" + "name=" + fullname + "&email=" + email + "&pw=" + passwd;
+                finalURL = baseURL + "/csignup?" + "name=" + fullname + "&email=" + email + "&password=" + passwd;
             }
 
             var xmlhttp = new XMLHttpRequest();

@@ -20,7 +20,7 @@ function login(){
         if(userType == "s"){
             var finalURL = baseURL + "/slogin?" + "email=" + email + "&pw=" + passwd;
         } else {
-            var finalURL = baseURL + "/clogin?" + "email=" + email + "&pw=" + passwd;
+            var finalURL = baseURL + "/clogin?" + "email=" + email + "&password=" + passwd;
         }
 
         var xmlhttp = new XMLHttpRequest();
