@@ -14,21 +14,22 @@ function addJob(){
     var empType = document.getElementById("employmentType").value;
     var city_id = searchCityWithAdd(document.getElementById("city").value);
 
-    // getUserId() must be used in url
-
-    var finalURL = baseURL + "/add_job?" + "company=" + "1" + "&desc=" + desc + "&emp_type=" + empType + "&city=" + city_id;
-    var skill = ["-1","",""];   // skill_id, name, desc
+    var finalURL = baseURL + "/add_job?" + "company=" + getUserId() + "&desc=" + desc + "&emp_type=" + empType + "&city=" + city_id;
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("POST",finalURL,false);
     xmlhttp.onreadystatechange = function() {
         if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
             var response = JSON.parse(xmlhttp.responseText);
             alert("add job request");
+            req_ids.forEach(element => {
+                addReqToJob(element,response.job_id);
+            });
+            
         }
     };
     xmlhttp.send();    
 
-    //window.location.href='./companyProfile.html';
+    window.location.href='./companyProfile.html';
 }
 
 function searchSkill(skillName){
@@ -68,7 +69,6 @@ function addRequirement(){
     if(req[0] != "-1"){
         alert("requirement exists");
         addReqToTable(req[1],req[2],parseInt(req[0])); // name,desc,id
-        addReqToJob(parseInt(req[0]));
     } else {
         alert("requirement does not exist in database");
 
@@ -82,15 +82,13 @@ function addRequirement(){
                     // alert(response.skill_id);
                     // skill_id = response.skill_id;
                     addReqToTable(reqName,reqDesc,response.skill_id);
-                    // add skill to student
-                    req[0] = response.skill_id;
-                    addReqToJob(response.skill_id);
+                    req[0] = response.skill_id; // store created skill_id
             }
         };
         xmlhttp.send();
     }
 
-    req_ids.push(req[0]);
+    req_ids.push(parseInt(req[0]));
 
     document.getElementById("reqname").value = "";
     document.getElementById("reqdesc").value = "";
@@ -108,7 +106,7 @@ function addReqToTable(reqName,reqDesc,req_id){
     reqTableRow += reqName;
     reqTableRow += '</td><td>';
     reqTableRow += reqDesc;
-    reqTableRow += '</td><td><button onclick="deleteRow(this);removeReqFromJob('
+    reqTableRow += '</td><td><button onclick="deleteRow(this);removeReqFromTable('
     reqTableRow += req_id
     reqTableRow += ');" class="btn btn-light"><i class=\'fas fa-trash-alt\'></i></button></td></tr>';
     // <tr>
@@ -121,20 +119,20 @@ function addReqToTable(reqName,reqDesc,req_id){
     document.getElementById("reqsTableBody").insertAdjacentHTML('beforeend', reqTableRow);
 }
 
-function addReqToJob(req_id){
+function addReqToJob(req_id,job_id){
 
     alert("in add req_id to job");
 
-    // var url = baseURL + "/edit_student_skill?" + "type=add" + "&stu_id=" + getUserId() + "&skill_id=" + req_id;
-    // var xmlhttp = new XMLHttpRequest();
-    // xmlhttp.open("POST",url,false);
-    // xmlhttp.onreadystatechange = function() {
-    //     if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
-    //             // var response = JSON.parse(xmlhttp.responseText);
-    //             alert("req added to job");
-    //     }
-    // };
-    // xmlhttp.send();
+    var url = baseURL + "/edit_job_req?" + "type=add" + "&job_id=" + job_id + "&skill_id=" + req_id;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST",url,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+                // var response = JSON.parse(xmlhttp.responseText);
+                alert("req added to job");
+        }
+    };
+    xmlhttp.send();
 
 }
 
@@ -144,24 +142,13 @@ function deleteRow(r) {
     reqsTableCounter -= 1;
 }
 
-function removeReqFromJob(req_id){
+function removeReqFromTable(req_id){
 
     alert("in remove req from job");
 
     req_ids.splice(req_ids.indexOf(req_id),1);
 
-    // alert("req_ids array : " + req_ids.toString());
-
-    // var url = baseURL + "/edit_student_skill?" + "type=del" + "&stu_id=" + getUserId() + "&skill_id=" + skill_id;
-    // var xmlhttp = new XMLHttpRequest();
-    // xmlhttp.open("POST",url,false);
-    // xmlhttp.onreadystatechange = function() {
-    //     if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
-    //             // var response = JSON.parse(xmlhttp.responseText);
-    //             alert("skill deleted from student");
-    //     }
-    // };
-    // xmlhttp.send();
+    alert("in add req_id to job");
 
 }
 

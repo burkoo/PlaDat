@@ -41,7 +41,7 @@
             <div class="col-8">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 150px;">Company Name</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                    <input id="name" type="text" class="form-control" aria-describedby="basic-addon1" disabled>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -51,7 +51,7 @@
             <div class="col-8">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 150px;">E-mail</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                    <input id="email" type="text" class="form-control" aria-describedby="basic-addon1" disabled>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -61,7 +61,7 @@
             <div class="col-8">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 150px;">Country</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" >
+                    <input id="country" type="text" class="form-control" aria-describedby="basic-addon1" >
                 </div>
             </div>
             <div class="col-2"></div>
@@ -71,7 +71,7 @@
             <div class="col-8">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 150px;">City</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                    <input id="city" type="text" class="form-control" aria-describedby="basic-addon1">
                 </div>
             </div>
             <div class="col-2"></div>
@@ -81,7 +81,7 @@
             <div class="col-8">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 150px;">Employer Name</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                    <input id="excname" type="text" class="form-control" aria-describedby="basic-addon1">
                 </div>
             </div>
             <div class="col-2"></div>
@@ -91,7 +91,7 @@
             <div class="col-8">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="width: 150px;">Employer Id</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                    <input id="excid" type="text" class="form-control" aria-describedby="basic-addon1">
                 </div>
             </div>
             <div class="col-2"></div>
@@ -100,8 +100,8 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="width: 150px;">Employer Age</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
+                    <span class="input-group-text" id="basic-addon1" style="width: 150px;">Employer DOB</span>
+                    <input id="excdob" type="text" class="form-control" aria-describedby="basic-addon1">
                 </div>
             </div>
             <div class="col-2"></div>
@@ -110,7 +110,7 @@
         <div class="row">
             <div class="col-2"></div>
             <div class="col-8">
-                <table class="table table-hover">
+                <table id="jobsTable" class="table table-hover">
                     <thead>
                       <tr>
                         <th scope="col">#</th>
@@ -122,8 +122,8 @@
                         <th scope="col"></th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
+                    <tbody id="jobsTableBody">
+                      <!-- <tr>
                         <th scope="row">1</th>
                         <td>Junior Java Developer</td>
                         <td>Istanbul</td>
@@ -140,7 +140,7 @@
                         <td><button class="btn btn-info" onclick="showModal();">Description</i></button></td>
                         <td><button class="btn btn-primary" onclick="editJob(job_id);">Edit</i></button></td>
                         <td><button class="btn btn-light"><i class='fas fa-trash-alt'></i></button></td>
-                      </tr>
+                      </tr> -->
                     </tbody>
                   </table>
             </div>
@@ -153,7 +153,7 @@
                 <button class="btn btn-success" onclick="window.location.href='./addJob.html';">Add a Job</button>
             </div>
             <div class="col-1">
-                <button class="btn btn-primary" onclick="window.location.href='./companyProfile.html';">Save</button>
+                <button class="btn btn-primary" onclick="updateCompanyDetail();">Save</button>
             </div>
             <div class="col-2"></div>
         </div>

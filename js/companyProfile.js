@@ -8,120 +8,203 @@ function getUserId(){
 
 window.onload = function(){
 
-    // var userId = getUserId();
+    var userId = getUserId();
     
-    // var finalURL = baseURL + "/stu_detail?" + "stu_id=" + userId;
+    var finalURL = baseURL + "/company_detail?" + "company_id=" + userId;
+
+    var job_list;
     
-    // var xmlhttp = new XMLHttpRequest();
-    // xmlhttp.open("GET",finalURL,false);
-    // xmlhttp.onreadystatechange = function() {
-    //     if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
-    //         var response = JSON.parse(xmlhttp.responseText);
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
 
-    //         if(response.name != null){
-    //             document.getElementById("name").value = response.name;
-    //         }
-    //         if(response.age != null){
-    //             document.getElementById("age").value = response.age;
-    //         }
-    //         if(response.university != null){
-    //             document.getElementById("university").value = response.university;
-    //         }
-    //         if(response.faculty != null){
-    //             document.getElementById("faculty").value = response.faculty;
-    //         }
-    //         if(response.department != null){
-    //             document.getElementById("department").value = response.department;
-    //         }
-    //         if(response.city != null){
-    //             document.getElementById("city").value = response.city;
-    //             document.getElementById("country").value = getCountry(searchCity(response.city));
-    //         }
-    //         if(response.emp_pref != null){
-    //             document.getElementById("employmentType").value = response.emp_pref;
-    //         }
-    //         if(response.grade != null){
-    //             document.getElementById("grade").value = response.grade;
-    //         }
+            if(response.name != null){
+                document.getElementById("name").value = response.name;
+            }
+            if(response.excdob != null){
+                var splitArr = response.excdob;
+                splitArr = splitArr.split(" ");
+                var dob = splitArr[0] + " " + splitArr[1] + " " + splitArr[2] + " " + splitArr[3];
+                document.getElementById("excage").value = dob;
+            }
+            if(response.excname != null){
+                document.getElementById("excname").value = response.excname;
+            }
+            if(response.excid != null){
+                document.getElementById("excid").value = response.excid;
+            }
+            if(response.email != null){
+                document.getElementById("email").value = response.email;
+            }
+            if(response.city_id != null){
+                var city_details = searchCityById(response.city_id);
+                document.getElementById("city").value = city_details[0];
+                document.getElementById("country").value = city_details[1];
+            }
+            if(response.job_lis != null){
+                job_list = response.job_lis;
+            }
+        }
+    };
+    xmlhttp.send();
 
-    //         if(response.skills != null){
-    //             for (let index = 0; index < response.skills.length; index++) {
-    //                 var splitted_text = response.skills[index].split(":");
+    for (let index = 0; index < job_list.length; index++) {
 
-    //                 if(splitted_text[0] == ""){
-    //                     break;
-    //                 }
+        var job_desc;
+        var job_location;
+        var job_emp_type;
 
-    //                 var skill_id = splitted_text[0];
-    //                 var skillName = splitted_text[1];
-    //                 var skillDesc = splitted_text[2];
+        var finalURL = baseURL + "/job_details?" + "job_id=" + job_list[index];
 
-    //                 skillTableCounter += 1;
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET",finalURL,false);
+        xmlhttp.onreadystatechange = function() {
+            if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+                var response = JSON.parse(xmlhttp.responseText);
+                job_desc = response.job_desc
+                job_location = response.city;
+                job_emp_type = response.emp_type;
+            }
+        };
+        xmlhttp.send();
 
-    //                 var skillTableRow;
-    //                 skillTableRow = '<tr><th scope="row">';
-    //                 skillTableRow += skillTableCounter.toString();
-    //                 skillTableRow += '</th><td>';
-    //                 skillTableRow += skillName;
-    //                 skillTableRow += '</td><td>';
-    //                 skillTableRow += skillDesc;
-    //                 skillTableRow += '</tr>';
-    //                 // <tr>
-    //                 //     <th scope="row">1</th>
-    //                 //     <td>Java</td>
-    //                 //     <td>Programming Language</td>
-    //                 // </tr>
+        jobsTableCounter += 1;
 
-    //                 document.getElementById("skillsTableBody").insertAdjacentHTML('beforeend', skillTableRow);
-                    
-    //             }
-    //         }
-    //     }
-    // };
-    // xmlhttp.send();
+        var jobsTableRow;
+        jobsTableRow = '<tr><th scope="row">';
+        jobsTableRow += jobsTableCounter.toString();
+        jobsTableRow += '</th><td>';
+        jobsTableRow += job_desc;
+        jobsTableRow += '</td><td>';
+        jobsTableRow += job_location;
+        jobsTableRow += '</td><td>';
+        jobsTableRow += job_emp_type;
+        jobsTableRow += '</td><td><button onclick="showModal(' + job_list[index] + ');" id="descBtn1" class="btn btn-info">Details</i></button></td></tr>';
+
+        document.getElementById("jobsTableBody").insertAdjacentHTML('beforeend', jobsTableRow);
+    }
 }
 
+function getCountry(city_id){
 
+    var country;
 
+    var finalURL = baseURL + "/cities?" + "id=" + city_id;
+    
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+            country = response.cities[0].country;
+        }
+    };
+    xmlhttp.send();
 
+    return country;
+}
 
+function searchCity(city){
+    // search city 
+    var finalURL = baseURL + "/search_city?" + "term=" + city;
+    var city_id;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+            var cities = response.cities;
+            if(cities.length != 0){
+                city_id = cities[0].id
+            }
+        }
+    };
+    xmlhttp.send();
 
+    return city_id;
+}
 
-
-
-
-
-
-
-
-
-
-function showModal(){
+function showModal(job_id){
     // set innerHtml of modal
+    var job_desc;
+    var job_location;
+    var job_emp_type;
+    var company_name;
+    var country_name;
+    var skill_list;
+
+    var finalURL = baseURL + "/job_details?" + "job_id=" + job_id;
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+            job_desc = response.job_desc
+            job_location = response.city;
+            job_emp_type = response.emp_type;
+            company_name = response.company_name;
+            country_name = response.country;
+            skill_list = response.skill_list;
+        }
+    };
+    xmlhttp.send();
+
+    var body = '<h5>Company Name</h5>'
+    body += '<p>' + company_name + '</p>';
+    body += '<h5>Job Description</h5>'
+    body += '<p>' + job_desc + '</p>';
+    body += '<h5>Job Location</h5>'
+    body += '<p>' + job_location + ', ' + country_name + '</p>';
+    body += '<h5>Employment Type</h5>'
+    body += '<p>' + job_emp_type + '</p>';
+    body += '<h5>Requirements</h5>'
+    // skill_list.forEach(element => {
+    //     body += '<p>' + '->' + element.name + ', ' + element.desc + '</p>';
+    // });
+    body += JSON.stringify(skill_list[0]);
+
     document.getElementById("exampleModal").innerHTML =
-        '<div class="modal-dialog"><div class="modal-content">'+
+        '<div class="modal-dialog modal-lg"><div class="modal-content">'+
         '<div class="modal-header">' +
-        '<h5 class="modal-title" id="exampleModalLabel">Java Developer in A Company</h5>' +
+        '<h5 class="modal-title" id="exampleModalLabel">Job Details</h5>' +
         '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
         '</div>' +
         '<div class="modal-body">'+
 
-
-
-            '<p>Modal body text goes here.</p>'+
-       
-       
-       
-       
-       
+            body +
        
         '</div>'+
         '<div class="modal-footer">'+
         '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>'+
-        '<button type="button" class="btn btn-primary">Apply</button>'+
         '</div>'+
         '</div>'+
         '</div>';
     $('#exampleModal').modal('show')
     
 };
+
+
+function searchCityById(city_id){
+    // search city 
+    var finalURL = baseURL + "/cities?" + "id=" + city_id;
+    var xmlhttp = new XMLHttpRequest();
+    var city_name;
+    var city_country;
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+            var cities = response.cities;
+            if(cities.length != 0){
+                city_name = cities[0].name;
+                city_country = cities[0].country;
+            }
+        }
+    };
+    xmlhttp.send();
+
+    return [city_name,city_country];
+}
