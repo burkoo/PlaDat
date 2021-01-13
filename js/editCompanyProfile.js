@@ -81,7 +81,7 @@ window.onload = function(){
         jobsTableRow += job_location;
         jobsTableRow += '</td><td>';
         jobsTableRow += job_emp_type;
-        jobsTableRow += '</td><td><button onclick="showModal();" id="descBtn1" class="btn btn-info">Details</i></button></td></td>';
+        jobsTableRow += '</td><td><button onclick="showModal('+ job_list[index] +');" id="descBtn1" class="btn btn-info">Details</i></button></td></td>';
         jobsTableRow += '<td><button class="btn btn-primary" onclick="editJob(' + job_list[index] + ');">Edit</i></button></td>'
         jobsTableRow += '</td><td><button onclick="deleteRow(this);removeJobFromCompany('
         jobsTableRow += job_list[index]
@@ -164,29 +164,59 @@ function searchCityById(city_id){
     return [city_name,city_country];
 }
 
-function showModal(){
+function showModal(job_id){
     // set innerHtml of modal
+    var job_desc;
+    var job_location;
+    var job_emp_type;
+    var company_name;
+    var country_name;
+    var skill_list;
+
+    var finalURL = baseURL + "/job_details?" + "job_id=" + job_id;
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+            job_desc = response.job_desc
+            job_location = response.city;
+            job_emp_type = response.emp_type;
+            company_name = response.company_name;
+            country_name = response.country;
+            skill_list = response.skill_list;
+        }
+    };
+    xmlhttp.send();
+
+    var body = '<h5>Company Name</h5>'
+    body += '<p>' + company_name + '</p>';
+    body += '<h5>Job Description</h5>'
+    body += '<p>' + job_desc + '</p>';
+    body += '<h5>Job Location</h5>'
+    body += '<p>' + job_location + ', ' + country_name + '</p>';
+    body += '<h5>Employment Type</h5>'
+    body += '<p>' + job_emp_type + '</p>';
+    body += '<h5>Requirements</h5>'
+    skill_list.forEach(element => {
+        body += '<p><b>' + element.name + '</b></p>';
+        body += '<p>' + element.desc + '</p>';
+    });
+
     document.getElementById("exampleModal").innerHTML =
-        '<div class="modal-dialog"><div class="modal-content">'+
+        '<div class="modal-dialog modal-lg"><div class="modal-content">'+
         '<div class="modal-header">' +
-        '<h5 class="modal-title" id="exampleModalLabel">Add a Job</h5>' +
+        '<h5 class="modal-title" id="exampleModalLabel">Job Details</h5>' +
         '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
         '</div>' +
         '<div class="modal-body">'+
 
-
-
-            '<p>Modal body text goes here.</p>'+
-       
-       
-       
-       
-       
+            body +
        
         '</div>'+
         '<div class="modal-footer">'+
-        '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>'+
-        '<button type="button" class="btn btn-primary">Add</button>'+
+        '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>'+
         '</div>'+
         '</div>'+
         '</div>';

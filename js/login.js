@@ -28,15 +28,18 @@ function login(){
         xmlhttp.onreadystatechange = function() {
             if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
                 var response = JSON.parse(xmlhttp.responseText);
-                alert(response.id);
-                // saving user id to session storage
-                sessionStorage.setItem('userID', response.id);  // SO IMPORTANT
-                if(userType == "s"){
-                    // go to students profile page
-                    window.location.href = "./studentProfile.html";
+                if(response.id > 0){
+                    // saving user id to session storage
+                    sessionStorage.setItem('userID', response.id);  // SO IMPORTANT
+                    if(userType == "s"){
+                        // go to students profile page
+                        window.location.href = "./studentProfile.html";
+                    } else {
+                        // go to company profile page
+                        window.location.href = "./companyProfile.html";
+                    }
                 } else {
-                    // go to company profile page
-                    window.location.href = "./companyProfile.html";
+                    alert("Wrong username of password!");
                 }
             }
         };

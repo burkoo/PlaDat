@@ -161,10 +161,10 @@ function showModal(job_id){
     body += '<h5>Employment Type</h5>'
     body += '<p>' + job_emp_type + '</p>';
     body += '<h5>Requirements</h5>'
-    // skill_list.forEach(element => {
-    //     body += '<p>' + '->' + element.name + ', ' + element.desc + '</p>';
-    // });
-    body += JSON.stringify(skill_list[0]);
+    skill_list.forEach(element => {
+        body += '<p><b>' + element.name + '</b></p>';
+        body += '<p>' + element.desc + '</p>';
+    });
 
     document.getElementById("exampleModal").innerHTML =
         '<div class="modal-dialog modal-lg"><div class="modal-content">'+
