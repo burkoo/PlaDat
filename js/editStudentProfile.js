@@ -1,6 +1,8 @@
 var baseURL = "http://127.0.0.1:9090";
 var skillTableCounter = 0;
 
+var skill_ids = [];
+
 function getUserId(){
     const USER_ID = sessionStorage.getItem('userID');
     return USER_ID;
@@ -77,6 +79,8 @@ window.onload = function(){
                     // </tr>
 
                     document.getElementById("skillsTableBody").insertAdjacentHTML('beforeend', skillTableRow);
+
+                    skill_ids.push(parseInt(skill_id));
                     
                 }
             }
@@ -434,9 +438,19 @@ function addSkill(){
     var skill = searchSkill(skillName);
 
     if(skill[0] != "-1"){
-        alert("skill exists");
-        addSkillToTable(skill[1],skill[2],parseInt(skill[0])); // name,desc,id
-        addSkillToStudent(parseInt(skill[0]));
+        if(skillDesc === skill[2]){
+            alert("skill exists");
+            if(skill_ids.includes(parseInt(skill[0]))){
+                
+            } else {
+                addSkillToTable(skill[1],skill[2],parseInt(skill[0])); // name,desc,id
+                addSkillToStudent(parseInt(skill[0]));
+                skill_ids.push(parseInt(skill[0]));
+            }
+        } else {
+            alert("in add skill");
+            addSkillWithoutCheck(skillName,skillDesc);
+        }
     } else {
         alert("in add skill");
 
@@ -452,6 +466,7 @@ function addSkill(){
                     addSkillToTable(skillName,skillDesc,response.skill_id);
                     // add skill to student
                     addSkillToStudent(response.skill_id);
+                    skill_ids.push(skill_id);
             }
         };
         xmlhttp.send();
@@ -459,6 +474,26 @@ function addSkill(){
 
     document.getElementById("skill_name").value = "";
     document.getElementById("skill_desc").value = "";
+}
+
+function addSkillWithoutCheck(skillName,skillDesc){
+    var url = baseURL + "/add_skill?" + "name=" + skillName + "&desc=" + skillDesc;
+    var xmlhttp2 = new XMLHttpRequest();
+    xmlhttp2.open("POST",url,false);
+    xmlhttp2.onreadystatechange = function() {
+        if(xmlhttp2.readyState ===4 && xmlhttp2.status ===200){
+                var response = JSON.parse(xmlhttp2.responseText);
+                // use returned department_id
+                // alert(response.skill_id);
+                // skill_id = response.skill_id;
+                addSkillToTable(skillName,skillDesc,response.skill_id);
+                // add skill to student
+                addSkillToStudent(response.skill_id);
+                skill_ids.push(response.skill_id);
+        }
+    };
+    xmlhttp2.send();
+
 }
 
 function addSkillToTable(skillName,skillDesc,skill_id){
@@ -523,5 +558,9 @@ function removeSkillFromStudent(skill_id){
         }
     };
     xmlhttp.send();
+
+    skill_ids.splice(skill_ids.indexOf(parseInt(skill_id)), 1);
+
+    window.location.href='./editStudentProfile.html';
 
 }
