@@ -53,36 +53,6 @@
                   </tr>
                 </thead>
                 <tbody id="jobsTableBody">
-                  <!-- <tr>
-                    <th scope="row">1</th>
-                    <td>Java Developer</td>
-                    <td>A Company</td>
-                    <td>Istanbul Avrupa</td>
-                    <td>
-                        <button onclick="showModal();" id="detailsBtn1" type="button" class="btn btn-info">Details</button>
-                        <button type="button" class="btn btn-success">Apply</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Python Developer</td>
-                    <td>B Company</td>
-                    <td>Istanbul Asya</td>
-                    <td>
-                        <button type="button" class="btn btn-info">Details</button>
-                        <button type="button" class="btn btn-success">Apply</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>C++ Developer</td>
-                    <td>C Company</td>
-                    <td>Kocaeli</td>
-                    <td>
-                        <button type="button" class="btn btn-info">Details</button>
-                        <button type="button" class="btn btn-success">Apply</button>
-                    </td>
-                  </tr> -->
                 </tbody>
               </table>
           </div>
@@ -96,8 +66,8 @@
                   <th scope="col">   </th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
+              <tbody id="offersTableBody">
+                <!-- <tr>
                   <th scope="row">1</th>
                   <td>Company A</td>
                   <td>
@@ -110,7 +80,7 @@
                   <td>
                       <button onclick="showModalOffer();" id="detailsBtn1" type="button" class="btn btn-info">Details</button>
                   </td>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
           </div>    
@@ -118,22 +88,15 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <!-- <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Java Developer in A Company</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Apply</button>
-                </div>
-            </div>
-        </div> -->
+    <div class="modal fade" id="offerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="jobDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="jobApplicationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     </div>
 
     <!-- Modal -->
@@ -158,23 +121,13 @@
                     <th scope="row">1</th>
                     <td>Java</td>
                     <td><input type="checkbox" class="form-check-input"></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Python</td>
-                    <td><input type="checkbox" class="form-check-input"></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>C</td>
-                    <td><input type="checkbox" class="form-check-input"></td>
-                  </tr> -->
+                  </tr>-->
                 </tbody>
               </table>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button onclick="alert(getSelectedCheckboxValues('skill'));" type="button" class="btn btn-primary">Search For Jobs</button>
+              <button  onclick="$('#skillsModal').modal('hide');" type="button" class="btn btn-secondary" >Close</button>
+              <button onclick="searchJobs();$('#skillsModal').modal('hide');" type="button" class="btn btn-primary">Search For Jobs</button>
             </div>
         </div>
       </div>

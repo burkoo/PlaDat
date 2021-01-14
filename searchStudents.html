@@ -35,7 +35,7 @@
     </div>
 
     <div class="container-md" style="padding-top: 60px;">
-        <button type="button" class="btn btn-primary btn-lg" style="margin:auto;display:block">SEARCH FOR STUDENTS</button>
+        <button onclick="showJobsModal();" type="button" class="btn btn-primary btn-lg" style="margin:auto;display:block">SEARCH FOR STUDENTS</button>
     </div>
 
     <div class="container-md" style="padding-top: 60px;">
@@ -61,7 +61,7 @@
                     <td>Istanbul Technical University</td>
                     <td>Computer Engineering</td>
                     <td>
-                        <button onclick="showModal();" id="detailsBtn1" type="button" class="btn btn-info">Details</button>
+                        <button onclick="showStudentDetailsModal(15);" id="detailsBtn1" type="button" class="btn btn-info">Details</button>
                         <button type="button" class="btn btn-success">Offer</button>
                     </td>
                   </tr>
@@ -79,8 +79,8 @@
                     <th scope="col">   </th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
+                <tbody id="studentsTableBody">
+                  <!-- <tr>
                     <th scope="row">1</th>
                     <td>Burak AKIN</td>
                     <td>ITU</td>
@@ -95,7 +95,7 @@
                     <td>
                         <button onclick="showModalOffer();" id="detailsBtn1" type="button" class="btn btn-info">Details</button>
                     </td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
           </div>    
@@ -103,11 +103,43 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="studentDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     </div>
-   
 
 
+    <!-- Modal -->
+    <div class="modal fade" id="jobsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+            <h5 class="modal-title" id="exampleModalLabel">JOBS</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table id="skillsTable" class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Job Description</th>
+                    <th scope="col">Use In Search</th>
+                  </tr>
+                </thead>
+                <tbody id="jobsTableBody">
+                  <!-- <tr>
+                    <th scope="row">1</th>
+                    <td>Java Developer</td>
+                    <td><input type="checkbox" class="form-check-input"></td>
+                  </tr>-->
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button  onclick="$('#jobsModal').modal('hide');" type="button" class="btn btn-secondary" >Close</button>
+              <button onclick="searchJobs();$('#jobsModal').modal('hide');" type="button" class="btn btn-primary">Search For Jobs</button>
+            </div>
+        </div>
+      </div>
+    </div>
 
 
 
