@@ -13,6 +13,49 @@ function getUserId(){
     return USER_ID;
 }
 
+window.onload = function(){
+
+    var userId = getUserId();
+    
+    var finalURL = baseURL + "/applications_of_student?" + "student_id=" + userId;
+    
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+
+            var students = response.students;
+
+            if(students != null){
+                for (let index = 0; index < students.length; index++) {
+                    var job_id = students[index].job_id;
+                    var company_name = students[index].company_name;
+                    var job_desc = students[index].description;
+
+                    offersTableCounter += 1;
+
+                    var offersTableRow;
+                    offersTableRow = '<tr><th scope="row">';
+                    offersTableRow += offersTableCounter.toString();
+                    offersTableRow += '</th><td>';
+                    offersTableRow += company_name;
+                    offersTableRow += '</td><td>';
+                    offersTableRow += job_desc;
+                    offersTableRow += '</td><td>';
+                    offersTableRow += '<button onclick="showJobDetailsModal(' + job_id + ');" type="button" class="btn btn-info">Details</button>';
+                    offersTableRow += '</td></tr>';
+
+                    document.getElementById("offersTableBody").insertAdjacentHTML('beforeend', offersTableRow);
+                    
+                }
+            }
+        }
+    };
+    xmlhttp.send();
+
+}
+
 function showModal(){
     // set innerHtml of modal
     document.getElementById("exampleModal").innerHTML =
@@ -89,6 +132,7 @@ function showJobDetailsModal(jobId){
         '</div>'+
         '<div class="modal-footer">'+
         '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>'+
+        '<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Accept</button>'+
         '</div>'+
         '</div>'+
         '</div>';

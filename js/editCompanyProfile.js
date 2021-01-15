@@ -227,7 +227,7 @@ function showModal(job_id){
 
 function editJob(job_id){
 
-    sessionStorage.setItem('jobID', job_id);  // SO IMPORTANT
+    sessionStorage.setItem('jobID', job_id);  // SO IMPORTANT, after reloading editjob, same job will come
 
     window.location.href='./editJob.html';
 }

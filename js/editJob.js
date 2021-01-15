@@ -77,25 +77,27 @@ function addReqToTable(reqName,reqDesc,req_id){
 
 function editJob(){
 
-    // var desc = document.getElementById("jobdesc").value;
-    // var empType = document.getElementById("employmentType").value;
-    // var city_id = searchCityWithAdd(document.getElementById("city").value);
+    const JOB_ID = sessionStorage.getItem('jobID');
+
+    var desc = document.getElementById("jobdesc").value;
+    var emp_type = document.getElementById("employmentType").value;
+    var city_id = searchCityWithAdd(document.getElementById("city").value);
 
     // // getUserId() must be used in url
 
-    // var finalURL = baseURL + "/add_job?" + "company=" + "1" + "&desc=" + desc + "&emp_type=" + empType + "&city=" + city_id;
-    // var skill = ["-1","",""];   // skill_id, name, desc
-    // var xmlhttp = new XMLHttpRequest();
-    // xmlhttp.open("POST",finalURL,false);
+    var finalURL = baseURL + "/edit_job?" + "type=update" + "&job_id=" + JOB_ID + "&city_id=" + city_id + "&desc=" + desc + "&emp_type=" + emp_type;
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST",finalURL,false);
     // xmlhttp.onreadystatechange = function() {
     //     if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
     //         var response = JSON.parse(xmlhttp.responseText);
-    //         alert("add job request");
+    //         alert("age updated")
     //     }
     // };
-    // xmlhttp.send();    
+    xmlhttp.send();   
 
-    //window.location.href='./companyProfile.html';
+    window.location.href='./companyProfile.html';
 }
 
 function searchSkill(skillName){

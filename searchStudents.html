@@ -51,10 +51,11 @@
                     <th scope="col">University</th>
                     <th scope="col">Department</th>
                     <th scope="col">   </th>
+                    <th scope="col">   </th>
                   </tr>
                 </thead>
-                <tbody id="studentTableBody">
-                  <tr>
+                <tbody id="studentsTableBody">
+                  <!-- <tr>
                     <th scope="row">1</th>
                     <td>Burak AKIN</td>
                     <td>23</td>
@@ -64,7 +65,7 @@
                         <button onclick="showStudentDetailsModal(15);" id="detailsBtn1" type="button" class="btn btn-info">Details</button>
                         <button type="button" class="btn btn-success">Offer</button>
                     </td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
           </div>
@@ -106,6 +107,10 @@
     <div class="modal fade" id="studentDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="jobApplicationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
+
 
     <!-- Modal -->
     <div class="modal fade" id="jobsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -135,7 +140,7 @@
             </div>
             <div class="modal-footer">
               <button  onclick="$('#jobsModal').modal('hide');" type="button" class="btn btn-secondary" >Close</button>
-              <button onclick="searchJobs();$('#jobsModal').modal('hide');" type="button" class="btn btn-primary">Search For Jobs</button>
+              <button onclick="searchStudents();$('#jobsModal').modal('hide');" type="button" class="btn btn-primary">Search For Students</button>
             </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
-var jobsTableCounter = 0;
 var baseURL = "http://127.0.0.1:9090";
 
+var studentsTableCounter = 0;
+var jobsTableCounter = 0;
 var applicantsTableCounter = 0;
 
 var searchClicked = false;
@@ -285,10 +286,52 @@ function getSelectedCheckboxValues(name) {
     return values;
 }
 
-function searchJobs(){
+function searchStudents(){
 
-    var jobsToUse = getSelectedCheckboxValues('job');
-    alert(jobsToUse.toString());
+    var job_id = getSelectedCheckboxValues('job');
+
+    var skillsToSearch = getSkillsFromJob(job_id);
+
+    var finalURL = baseURL + "/search_students_by_skill_ids?" + "term=" + skillsToSearch; // make string with commas
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+
+            if(response.students != null){
+                for (let index = 0; index < response.students.length; index++) {
+
+                    var student = response.students[index];
+
+                    var stu_id = student.id;
+                    var stu_name = student.name;
+                    var age = student.age;
+                    var uni = student.university;
+                    var dep = student.department;
+
+                    studentsTableCounter += 1;
+
+                    var studentsTableRow;
+                    studentsTableRow = '<tr><th scope="row">';
+                    studentsTableRow += studentsTableCounter.toString();
+                    studentsTableRow += '</th><td>';
+                    studentsTableRow += stu_name;
+                    studentsTableRow += '</td><td>';
+                    studentsTableRow += age;
+                    studentsTableRow += '</td><td>';
+                    studentsTableRow += uni;
+                    studentsTableRow += '</td><td>';
+                    studentsTableRow += dep;
+                    studentsTableRow += '</td><td><button onclick="showStudentDetailsModal('+ stu_id + ');" type="button" class="btn btn-info">Details</button></td>'
+                    studentsTableRow += '<td><button onclick="offerJob(' + stu_id + ',\'' + stu_name + '\',' + job_id + ');"  type="button" class="btn btn-success">Offer</button></td></tr>';
+                    document.getElementById("studentsTableBody").insertAdjacentHTML('beforeend', studentsTableRow);
+                    
+                }
+            }
+        }
+    };
+    xmlhttp.send();
 }
 
 function getStudentName(stu_id){
@@ -305,5 +348,66 @@ function getStudentName(stu_id){
     xmlhttp.send();
     return name;
 }
+
+function getSkillsFromJob(job_id){
+    var skill_list;
+
+    var finalURL = baseURL + "/job_details?" + "job_id=" + job_id;
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+            skill_list = response.skill_list;
+        }
+    };
+    xmlhttp.send();
+
+    var skills_as_string = "";
+
+    skill_list.forEach(element => {
+        skills_as_string += element.id + ',';
+    });
+
+    return skills_as_string.slice(0, -1);
+}
+
+function offerJob(stu_id,stu_name,job_id){
+
+    var finalURL = baseURL + "/add_application?" + "job_id=" + job_id + "&stu_id=" + stu_id + "&direction=" + "true"; // true for offer
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+            showOfferedModal(stu_name);
+        }
+    };
+    xmlhttp.send();
+}
+
+function showOfferedModal(stu_name){
+    // set innerHtml of modal
+    document.getElementById("jobApplicationModal").innerHTML =
+        '<div class="modal-dialog"><div class="modal-content">'+
+        '<div class="modal-header">' +
+        '<h5 class="modal-title" id="exampleModalLabel">Job Offer</h5>' +
+        '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+        '</div>' +
+        '<div class="modal-body">'+
+
+            '<p>Job offered to "' + stu_name + '" successfuly.</p>'+
+       
+        '</div>'+
+        '<div class="modal-footer">'+
+        '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
+    $('#jobApplicationModal').modal('show')
+    
+};
 
 
