@@ -85,7 +85,7 @@ function editJob(){
 
     // // getUserId() must be used in url
 
-    var finalURL = baseURL + "/edit_job?" + "type=update" + "&job_id=" + JOB_ID + "&city_id=" + city_id + "&desc=" + desc + "&emp_type=" + emp_type;
+    var finalURL = baseURL + "/edit_job?" + "job_id=" + JOB_ID + "&city_id=" + city_id + "&desc=" + desc + "&emp_type=" + emp_type;
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("POST",finalURL,false);
