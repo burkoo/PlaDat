@@ -3,6 +3,7 @@ var baseURL = "http://127.0.0.1:9090";
 
 var jobsTableCounter = 0;
 var offersTableCounter = 0;
+var acceptedTableCounter = 0;
 
 var searchClicked = false;
 
@@ -29,24 +30,52 @@ window.onload = function(){
 
             if(students != null){
                 for (let index = 0; index < students.length; index++) {
-                    var job_id = students[index].job_id;
-                    var company_name = students[index].company_name;
-                    var job_desc = students[index].description;
 
-                    offersTableCounter += 1;
+                    // check if this is an offer
+                    if(students[index].direction == true && students[index].response == false){
+                        var job_id = students[index].job_id;
+                        var company_name = students[index].company_name;
+                        var job_desc = students[index].description;
 
-                    var offersTableRow;
-                    offersTableRow = '<tr><th scope="row">';
-                    offersTableRow += offersTableCounter.toString();
-                    offersTableRow += '</th><td>';
-                    offersTableRow += company_name;
-                    offersTableRow += '</td><td>';
-                    offersTableRow += job_desc;
-                    offersTableRow += '</td><td>';
-                    offersTableRow += '<button onclick="showJobDetailsModal(' + job_id + ');" type="button" class="btn btn-info">Details</button>';
-                    offersTableRow += '</td></tr>';
+                        offersTableCounter += 1;
 
-                    document.getElementById("offersTableBody").insertAdjacentHTML('beforeend', offersTableRow);
+                        var offersTableRow;
+                        offersTableRow = '<tr><th scope="row">';
+                        offersTableRow += offersTableCounter.toString();
+                        offersTableRow += '</th><td>';
+                        offersTableRow += company_name;
+                        offersTableRow += '</td><td>';
+                        offersTableRow += job_desc;
+                        offersTableRow += '</td><td>';
+                        offersTableRow += '<button onclick="showJobDetailsModal(' + job_id + ');" type="button" class="btn btn-info">Details</button>';
+                        offersTableRow += '</td></tr>';
+
+                        document.getElementById("offersTableBody").insertAdjacentHTML('beforeend', offersTableRow);
+                    }
+
+                    if(students[index].response == true){
+                        var job_id = students[index].job_id;
+                        var company_name = students[index].company_name;
+                        var job_desc = students[index].description;
+
+                        acceptedTableCounter += 1;
+
+                        var acceptedTableRow;
+                        acceptedTableRow = '<tr><th scope="row">';
+                        acceptedTableRow += acceptedTableCounter.toString();
+                        acceptedTableRow += '</th><td>';
+                        acceptedTableRow += company_name;
+                        acceptedTableRow += '</td><td>';
+                        acceptedTableRow += job_desc;
+                        acceptedTableRow += '</td><td>';
+                        acceptedTableRow += '<button onclick="showAcceptedJobDetailsModal(' + job_id + ');" type="button" class="btn btn-info">Details</button>';
+                        acceptedTableRow += '</td></tr>';
+
+                        document.getElementById("acceptedTableBody").insertAdjacentHTML('beforeend', acceptedTableRow);
+                    }
+
+                    
+                    
                     
                 }
             }
@@ -56,28 +85,28 @@ window.onload = function(){
 
 }
 
-function showModal(){
-    // set innerHtml of modal
-    document.getElementById("exampleModal").innerHTML =
-        '<div class="modal-dialog modal-lg"><div class="modal-content">'+
-        '<div class="modal-header">' +
-        '<h5 class="modal-title" id="exampleModalLabel">Java Developer in A Company</h5>' +
-        '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
-        '</div>' +
-        '<div class="modal-body">'+
+// function showModal(){
+//     // set innerHtml of modal
+//     document.getElementById("exampleModal").innerHTML =
+//         '<div class="modal-dialog modal-lg"><div class="modal-content">'+
+//         '<div class="modal-header">' +
+//         '<h5 class="modal-title" id="exampleModalLabel">Java Developer in A Company</h5>' +
+//         '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+//         '</div>' +
+//         '<div class="modal-body">'+
 
-            '<p>Modal body text goes here.</p>'+
+//             '<p>Modal body text goes here.</p>'+
        
-        '</div>'+
-        '<div class="modal-footer">'+
-        '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>'+
-        '<button type="button" class="btn btn-primary">Apply</button>'+
-        '</div>'+
-        '</div>'+
-        '</div>';
-    $('#exampleModal').modal('show')
+//         '</div>'+
+//         '<div class="modal-footer">'+
+//         '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>'+
+//         '<button type="button" class="btn btn-primary">Apply</button>'+
+//         '</div>'+
+//         '</div>'+
+//         '</div>';
+//     $('#exampleModal').modal('show')
     
-};
+// };
 
 function showJobDetailsModal(jobId){
 
@@ -132,13 +161,104 @@ function showJobDetailsModal(jobId){
         '</div>'+
         '<div class="modal-footer">'+
         '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>'+
-        '<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Accept</button>'+
+        '<button onclick="applyJob('+ jobId +',\'' + job_desc +'\');" type="button" class="btn btn-primary" data-bs-dismiss="modal">Apply</button>'+
         '</div>'+
         '</div>'+
         '</div>';
     $('#jobDetailsModal').modal('show')
     
 };
+
+// '<button onclick="acceptJob(' + getUserId() + ',\'' + job_desc + '\',' + jobId + ')" type="button" class="btn btn-primary" data-bs-dismiss="modal">Apply</button>'+
+
+function showAcceptedJobDetailsModal(jobId){
+
+    var job_desc;
+    var job_location;
+    var job_emp_type;
+    var company_name;
+    var country_name;
+    var skill_list;
+    var company_id;
+    var company_email;
+
+    var finalURL = baseURL + "/job_details?" + "job_id=" + jobId;
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+            job_desc = response.job_desc
+            job_location = response.city;
+            job_emp_type = response.emp_type;
+            company_name = response.company_name;
+            country_name = response.country;
+            skill_list = response.skill_list;
+            company_id = response.company_id;
+        }
+    };
+    xmlhttp.send();
+
+    finalURL = baseURL + "/company_detail?" + "company_id=" + company_id;
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+            company_email = response.email;
+        }
+    };
+    xmlhttp.send();
+
+    var body = '<h5>Company Name</h5>'
+    body += '<p>' + company_name + '</p>';
+    body += '<h5>Company Email</h5>'
+    body += '<p>' + company_email + '</p>';
+    body += '<h5>Job Description</h5>'
+    body += '<p>' + job_desc + '</p>';
+    body += '<h5>Job Location</h5>'
+    body += '<p>' + job_location + ', ' + country_name + '</p>';
+    body += '<h5>Employment Type</h5>'
+    body += '<p>' + job_emp_type + '</p>';
+    body += '<h5>Requirements</h5>'
+    skill_list.forEach(element => {
+        body += '<p><b>' + element.name + '</b></p>';
+        body += '<p>' + element.desc + '</p>';
+    });
+
+    document.getElementById("jobDetailsModal").innerHTML =
+        '<div class="modal-dialog modal-lg"><div class="modal-content">'+
+        '<div class="modal-header">' +
+        '<h5 class="modal-title" id="exampleModalLabel">Job Details</h5>' +
+        '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+        '</div>' +
+        '<div class="modal-body">'+
+
+            body +
+       
+        '</div>'+
+        '<div class="modal-footer">'+
+        '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
+    $('#jobDetailsModal').modal('show')
+    
+};
+
+function acceptJob(stu_id,job_desc,job_id){
+
+    var finalURL = baseURL + "/positive_response?" + "stu_id=" + stu_id + "&job_id=" + job_id;
+        
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST",finalURL,false);
+    xmlhttp.send();
+
+    showAcceptedModal(job_desc);
+
+}
 
 function showModalOffer(){
     // set innerHtml of modal
@@ -300,6 +420,28 @@ function showAppliedModal(job_desc){
         '<div class="modal-body">'+
 
             '<p>Applied to "' + job_desc + '" successfuly.</p>'+
+       
+        '</div>'+
+        '<div class="modal-footer">'+
+        '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
+    $('#jobApplicationModal').modal('show')
+    
+};
+
+function showAcceptedModal(job_desc){
+    // set innerHtml of modal
+    document.getElementById("jobApplicationModal").innerHTML =
+        '<div class="modal-dialog"><div class="modal-content">'+
+        '<div class="modal-header">' +
+        '<h5 class="modal-title" id="exampleModalLabel">Accepted Job</h5>' +
+        '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+        '</div>' +
+        '<div class="modal-body">'+
+
+            '<p>"' + job_desc + '" accepted successfuly.</p>'+
        
         '</div>'+
         '<div class="modal-footer">'+

@@ -4,7 +4,10 @@ var studentsTableCounter = 0;
 var jobsTableCounter = 0;
 var applicantsTableCounter = 0;
 
+var acceptedTableCounter = 0;
 var searchClicked = false;
+
+var current_job_id = -1;
 
 var stu_ids = [];
 
@@ -34,22 +37,44 @@ window.onload = function(){
                     var stu_id = students[index].student_id;
                     var student_name = getStudentName(stu_id);
                     var job_desc = students[index].description;
+                    var job_id = students[index].job_id;
 
-                    applicantsTableCounter += 1;
+                    // check if this is an application
+                    if(students[index].direction == false && students[index].response == false ){
 
-                    var applicantsTableRow;
-                    applicantsTableRow = '<tr><th scope="row">';
-                    applicantsTableRow += applicantsTableCounter.toString();
-                    applicantsTableRow += '</th><td>';
-                    applicantsTableRow += student_name;
-                    applicantsTableRow += '</td><td>';
-                    applicantsTableRow += job_desc;
-                    applicantsTableRow += '</td><td>';
-                    applicantsTableRow += '<button onclick="showStudentDetailsAcceptModal(' + stu_id + ');" type="button" class="btn btn-info">Details</button>';
-                    applicantsTableRow += '</td></tr>';
+                        applicantsTableCounter += 1;
 
-                    document.getElementById("applicantsTableBody").insertAdjacentHTML('beforeend', applicantsTableRow);
-                    
+                        var applicantsTableRow;
+                        applicantsTableRow = '<tr><th scope="row">';
+                        applicantsTableRow += applicantsTableCounter.toString();
+                        applicantsTableRow += '</th><td>';
+                        applicantsTableRow += student_name;
+                        applicantsTableRow += '</td><td>';
+                        applicantsTableRow += job_desc;
+                        applicantsTableRow += '</td><td>';
+                        applicantsTableRow += '<button onclick="showStudentDetailsAcceptModal(' + stu_id + ',' + job_id + ');" type="button" class="btn btn-info">Details</button>';
+                        applicantsTableRow += '</td></tr>';
+
+                        document.getElementById("applicantsTableBody").insertAdjacentHTML('beforeend', applicantsTableRow);
+                    }
+
+                    if(students[index].response == true){
+
+                        acceptedTableCounter += 1;
+
+                        var acceptedTableRow;
+                        acceptedTableRow = '<tr><th scope="row">';
+                        acceptedTableRow += acceptedTableCounter.toString();
+                        acceptedTableRow += '</th><td>';
+                        acceptedTableRow += student_name;
+                        acceptedTableRow += '</td><td>';
+                        acceptedTableRow += job_desc;
+                        acceptedTableRow += '</td><td>';
+                        acceptedTableRow += '<button onclick="showAcceptedStudentDetailsModal(' + stu_id + ');" type="button" class="btn btn-info">Details</button>';
+                        acceptedTableRow += '</td></tr>';
+
+                        document.getElementById("acceptedTableBody").insertAdjacentHTML('beforeend', acceptedTableRow);
+                    }
                 }
             }
         }
@@ -57,6 +82,84 @@ window.onload = function(){
     xmlhttp.send();
 
 }
+
+function showAcceptedStudentDetailsModal(stu_id){
+
+    var age;
+    var city;
+    var department;
+    var emp_pref;
+    var faculty;
+    var grade;
+    var name;
+    var skills;
+    var university;
+
+    var finalURL = baseURL + "/stu_detail?" + "stu_id=" + stu_id;
+        
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",finalURL,false);
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+            var response = JSON.parse(xmlhttp.responseText);
+            age = response.age
+            city = response.city;
+            department = response.department;
+            emp_pref = response.emp_pref;
+            faculty = response.faculty;
+            grade = response.faculty;
+            name = response.name;
+            skills = response.skills;
+            university = response.university;
+        }
+    };
+    xmlhttp.send();
+
+
+    var body = '<h5>Name</h5>'
+    body += '<p>' + name + '</p>';
+    body += '<h5>Age</h5>'
+    body += '<p>' + age + '</p>';
+    body += '<h5>University</h5>'
+    body += '<p>' + university + '</p>';
+    body += '<h5>Department</h5>'
+    body += '<p>' + department + '</p>';
+    body += '<h5>Employment Type</h5>'
+    body += '<p>' + emp_pref + '</p>';
+    body += '<h5>Grade</h5>'
+    body += '<p>' + grade + '</p>';
+    body += '<h5>Skills</h5>'
+    skills.forEach(element => {
+        var splitted_text = element.split(":");
+
+        var skill_id = splitted_text[0];
+        var skillName = splitted_text[1];
+        var skillDesc = splitted_text[2];
+        body += '<p><b>' + skillName + '</b></p>';
+        body += '<p>' + skillDesc + '</p>';
+    });
+
+
+    // set innerHtml of modal
+    document.getElementById("studentDetailModal").innerHTML =
+        '<div class="modal-dialog modal-lg"><div class="modal-content">'+
+        '<div class="modal-header">' +
+        '<h5 class="modal-title" id="exampleModalLabel">Student Details</h5>' +
+        '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+        '</div>' +
+        '<div class="modal-body">'+
+
+            body+
+       
+        '</div>'+
+        '<div class="modal-footer">'+
+        '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
+    $('#studentDetailModal').modal('show')
+    
+};
 
 function showStudentDetailsModal(stu_id){
 
@@ -128,7 +231,7 @@ function showStudentDetailsModal(stu_id){
         '</div>'+
         '<div class="modal-footer">'+
         '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>'+
-        '<button type="button" class="btn btn-success">Offer</button>'+
+        '<button onclick="offerJob(' + stu_id + ',\'' + name + '\',' + current_job_id + ');" type="button" class="btn btn-success">Offer</button>'+
         '</div>'+
         '</div>'+
         '</div>';
@@ -136,7 +239,19 @@ function showStudentDetailsModal(stu_id){
     
 };
 
-function showStudentDetailsAcceptModal(stu_id){
+function acceptJob(stu_id,stu_name,job_id){
+
+    var finalURL = baseURL + "/positive_response?" + "stu_id=" + stu_id + "&job_id=" + job_id;
+        
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST",finalURL,false);
+    xmlhttp.send();
+
+    showAcceptedModal(stu_name);
+
+}
+
+function showStudentDetailsAcceptModal(stu_id,job_id){
 
     var age;
     var city;
@@ -207,7 +322,7 @@ function showStudentDetailsAcceptModal(stu_id){
         '</div>'+
         '<div class="modal-footer">'+
         '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>'+
-        '<button type="button" class="btn btn-primary">Accept</button>'+
+        '<button onclick="acceptJob(' + stu_id + ',\'' + name + '\',' + job_id + ');" type="button" class="btn btn-primary">Accept</button>'+
         '</div>'+
         '</div>'+
         '</div>';
@@ -288,50 +403,98 @@ function getSelectedCheckboxValues(name) {
 
 function searchStudents(){
 
+    document.getElementById("studentsTableBody").innerHTML = "";
+    studentsTableCounter = 0;
+
     var job_id = getSelectedCheckboxValues('job');
+
+    current_job_id = job_id;
 
     var skillsToSearch = getSkillsFromJob(job_id);
 
-    var finalURL = baseURL + "/search_students_by_skill_ids?" + "term=" + skillsToSearch; // make string with commas
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET",finalURL,false);
-    xmlhttp.onreadystatechange = function() {
-        if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
-            var response = JSON.parse(xmlhttp.responseText);
+    skillsToSearch.forEach(element => {
+        var finalURL = baseURL + "/search_students_by_skill?" + "term=" + element; // make string with commas
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET",finalURL,false);
+        xmlhttp.onreadystatechange = function() {
+            if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+                var response = JSON.parse(xmlhttp.responseText);
 
-            if(response.students != null){
-                for (let index = 0; index < response.students.length; index++) {
+                if(response.students != null){
+                    for (let index = 0; index < response.students.length; index++) {
 
-                    var student = response.students[index];
+                        var student = response.students[index];
 
-                    var stu_id = student.id;
-                    var stu_name = student.name;
-                    var age = student.age;
-                    var uni = student.university;
-                    var dep = student.department;
+                        var stu_id = student.id;
+                        var stu_name = student.name;
+                        var age = student.age;
+                        var uni = student.university;
+                        var dep = student.department;
 
-                    studentsTableCounter += 1;
+                        studentsTableCounter += 1;
 
-                    var studentsTableRow;
-                    studentsTableRow = '<tr><th scope="row">';
-                    studentsTableRow += studentsTableCounter.toString();
-                    studentsTableRow += '</th><td>';
-                    studentsTableRow += stu_name;
-                    studentsTableRow += '</td><td>';
-                    studentsTableRow += age;
-                    studentsTableRow += '</td><td>';
-                    studentsTableRow += uni;
-                    studentsTableRow += '</td><td>';
-                    studentsTableRow += dep;
-                    studentsTableRow += '</td><td><button onclick="showStudentDetailsModal('+ stu_id + ');" type="button" class="btn btn-info">Details</button></td>'
-                    studentsTableRow += '<td><button onclick="offerJob(' + stu_id + ',\'' + stu_name + '\',' + job_id + ');"  type="button" class="btn btn-success">Offer</button></td></tr>';
-                    document.getElementById("studentsTableBody").insertAdjacentHTML('beforeend', studentsTableRow);
-                    
+                        var studentsTableRow;
+                        studentsTableRow = '<tr><th scope="row">';
+                        studentsTableRow += studentsTableCounter.toString();
+                        studentsTableRow += '</th><td>';
+                        studentsTableRow += stu_name;
+                        studentsTableRow += '</td><td>';
+                        studentsTableRow += age;
+                        studentsTableRow += '</td><td>';
+                        studentsTableRow += uni;
+                        studentsTableRow += '</td><td>';
+                        studentsTableRow += dep;
+                        studentsTableRow += '</td><td><button onclick="showStudentDetailsModal('+ stu_id + ');" type="button" class="btn btn-info">Details</button></td>'
+                        studentsTableRow += '<td><button onclick="offerJob(' + stu_id + ',\'' + stu_name + '\',' + job_id + ');"  type="button" class="btn btn-success">Offer</button></td></tr>';
+                        document.getElementById("studentsTableBody").insertAdjacentHTML('beforeend', studentsTableRow);
+                        
+                    }
                 }
             }
-        }
-    };
-    xmlhttp.send();
+        };
+        xmlhttp.send();
+    });
+    
+    // var finalURL = baseURL + "/search_students_by_skill_ids?" + "term=" + skillsToSearch; // make string with commas
+    // var xmlhttp = new XMLHttpRequest();
+    // xmlhttp.open("GET",finalURL,false);
+    // xmlhttp.onreadystatechange = function() {
+    //     if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+    //         var response = JSON.parse(xmlhttp.responseText);
+
+    //         if(response.students != null){
+    //             for (let index = 0; index < response.students.length; index++) {
+
+    //                 var student = response.students[index];
+
+    //                 var stu_id = student.id;
+    //                 var stu_name = student.name;
+    //                 var age = student.age;
+    //                 var uni = student.university;
+    //                 var dep = student.department;
+
+    //                 studentsTableCounter += 1;
+
+    //                 var studentsTableRow;
+    //                 studentsTableRow = '<tr><th scope="row">';
+    //                 studentsTableRow += studentsTableCounter.toString();
+    //                 studentsTableRow += '</th><td>';
+    //                 studentsTableRow += stu_name;
+    //                 studentsTableRow += '</td><td>';
+    //                 studentsTableRow += age;
+    //                 studentsTableRow += '</td><td>';
+    //                 studentsTableRow += uni;
+    //                 studentsTableRow += '</td><td>';
+    //                 studentsTableRow += dep;
+    //                 studentsTableRow += '</td><td><button onclick="showStudentDetailsModal('+ stu_id + ');" type="button" class="btn btn-info">Details</button></td>'
+    //                 studentsTableRow += '<td><button onclick="offerJob(' + stu_id + ',\'' + stu_name + '\',' + job_id + ');"  type="button" class="btn btn-success">Offer</button></td></tr>';
+    //                 document.getElementById("studentsTableBody").insertAdjacentHTML('beforeend', studentsTableRow);
+                    
+    //             }
+    //         }
+    //     }
+    // };
+    // xmlhttp.send();
 }
 
 function getStudentName(stu_id){
@@ -365,12 +528,18 @@ function getSkillsFromJob(job_id){
     xmlhttp.send();
 
     var skills_as_string = "";
+    var skillNames = [];
+
+    // skill_list.forEach(element => {
+    //     skills_as_string += element.id + ',';
+    // });
 
     skill_list.forEach(element => {
-        skills_as_string += element.id + ',';
+        skillNames.push(element.name);
     });
 
-    return skills_as_string.slice(0, -1);
+    // return skills_as_string.slice(0, -1);
+    return skillNames;
 }
 
 function offerJob(stu_id,stu_name,job_id){
@@ -399,6 +568,28 @@ function showOfferedModal(stu_name){
         '<div class="modal-body">'+
 
             '<p>Job offered to "' + stu_name + '" successfuly.</p>'+
+       
+        '</div>'+
+        '<div class="modal-footer">'+
+        '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
+    $('#jobApplicationModal').modal('show')
+    
+};
+
+function showAcceptedModal(stu_name){
+    // set innerHtml of modal
+    document.getElementById("jobApplicationModal").innerHTML =
+        '<div class="modal-dialog"><div class="modal-content">'+
+        '<div class="modal-header">' +
+        '<h5 class="modal-title" id="exampleModalLabel">Accepted Student</h5>' +
+        '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+        '</div>' +
+        '<div class="modal-body">'+
+
+            '<p>"' + stu_name + '" accepted successfuly.</p>'+
        
         '</div>'+
         '<div class="modal-footer">'+

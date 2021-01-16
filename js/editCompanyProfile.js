@@ -95,10 +95,17 @@ window.onload = function(){
 function deleteRow(r) {
     var i = r.parentNode.parentNode.rowIndex;
     document.getElementById("jobsTable").deleteRow(i);
-    reqsTableCounter -= 1;
+    jobsTableCounter -= 1;
 }
 
-function removeJobFromCompany(){
+function removeJobFromCompany(job_id){
+
+    var finalURL = baseURL + "/delete_job?" + "job_id=" + job_id;
+    
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST",finalURL,false);
+    xmlhttp.send();
+
 
 
 }
@@ -255,6 +262,8 @@ function updateCity(){
     //     }
     // };
     xmlhttp.send();
+
+    alert("city updated")
 }
 
 
