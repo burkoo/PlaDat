@@ -32,11 +32,11 @@ function login(){
                     // saving user id to session storage
                     sessionStorage.setItem('userID', response.id);  // SO IMPORTANT
                     if(userType == "s"){
-                        // go to students profile page
-                        window.location.href = "./studentProfile.html";
+                        // go to students main page
+                        window.location.href = "./mainPageStudent.html";
                     } else {
-                        // go to company profile page
-                        window.location.href = "./companyProfile.html";
+                        // go to company main page
+                        window.location.href = "./mainPageCompany.html";
                     }
                 } else {
                     alert("Wrong username of password!");

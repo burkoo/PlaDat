@@ -354,6 +354,9 @@ function searchJobs(){
                 var response = JSON.parse(xmlhttp.responseText);
     
                 if(response.jobs != null){
+                    if(response.jobs.length == 0){
+                        alert("No job found for your skillset");
+                    }
                     for (let index = 0; index < response.jobs.length; index++) {
 
                         var city = response.jobs[index].city;
@@ -384,7 +387,7 @@ function searchJobs(){
                         }
     
                     }
-                }
+                } 
             }
         };
         xmlhttp.send();
