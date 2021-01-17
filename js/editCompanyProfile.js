@@ -241,10 +241,30 @@ function editJob(job_id){
 
 function updateCompanyDetail(){
 
-    updateCity();
-    updateExcDetail();
+    var country = document.getElementById("country").value;
+    var city = document.getElementById("city").value;
+    var empName = document.getElementById("excname").value;
+    var empId = document.getElementById("excid").value;
+    var empDob = document.getElementById("excdob").value;
+    
 
-    window.location.href='./companyProfile.html';
+
+    if(country == ""){
+        alert("Country is required !");
+    } else if(city == ""){
+        alert("City is required !");
+    } else if(empName == ""){
+        alert("Employer Name is required !");
+    } else if(empId == ""){
+        alert("Employer Id is required !");
+    } else if(empDob == ""){
+        alert("Employer DOB is required !");
+    } else {
+        updateCity();
+        updateExcDetail();
+
+        window.location.href='./companyProfile.html';
+    }
 }
 
 function updateCity(){

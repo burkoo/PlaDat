@@ -91,16 +91,44 @@ window.onload = function(){
 
 function saveButtonListener(){
     // save request
-
-    updateUniversity(document.getElementById("university").value);
-    updateDepartment(document.getElementById("department").value);
-    updateCity(document.getElementById("city").value);
-    updateGrade(document.getElementById("grade").value);
-    updateAge(document.getElementById("age").value);
-    updateEmploymentType(document.getElementById("employmentType").value);
+    var university = document.getElementById("university").value;
+    var department = document.getElementById("department").value;
+    var city = document.getElementById("city").value;
+    var grade = document.getElementById("grade").value;
+    var age = document.getElementById("age").value;
+    var employmentType = document.getElementById("employmentType").value;
+    var faculty = document.getElementById("faculty").value;
+    var country = document.getElementById("country").value;
+    var university_city = document.getElementById("university_city").value;
     
 
-    window.location.href='./studentProfile.html';
+
+    if(age == ""){
+        alert("Age is required !");
+    } else if(university == ""){
+        alert("University is required !");
+    } else if(university_city == ""){
+        alert("University City is required !");
+    } else if(faculty == ""){
+        alert("Faculty is required !");
+    } else if(department == ""){
+        alert("Department is required !");
+    } else if(grade == ""){
+        alert("Grade is required !");
+    } else if(city == ""){
+        alert("City is required !");
+    } else if(country == ""){
+        alert("Country is required !");
+    } else {
+        updateUniversity(university);
+        updateDepartment(department);
+        updateCity(city);
+        updateGrade(grade);
+        updateAge(age);
+        updateEmploymentType(employmentType);
+        
+        window.location.href='./studentProfile.html';
+    }
 }
 
 function updateAge(age){
@@ -434,46 +462,54 @@ function addSkill(){
     var skillName = document.getElementById("skill_name").value;
     var skillDesc = document.getElementById("skill_desc").value;
 
-    // search skill if it exists
-    var skill = searchSkill(skillName);
+    if(skillName == ""){
+        alert("Skill name must be given");
+    } else if (skillDesc == ""){
+        alert("Skill description must be given");
+    } else {
+         // search skill if it exists
+        var skill = searchSkill(skillName);
 
-    if(skill[0] != "-1"){
-        if(skillDesc === skill[2]){
-            alert("skill exists");
-            if(skill_ids.includes(parseInt(skill[0]))){
-                
+        if(skill[0] != "-1"){
+            if(skillDesc === skill[2]){
+                alert("skill exists");
+                if(skill_ids.includes(parseInt(skill[0]))){
+                    
+                } else {
+                    addSkillToTable(skill[1],skill[2],parseInt(skill[0])); // name,desc,id
+                    addSkillToStudent(parseInt(skill[0]));
+                    skill_ids.push(parseInt(skill[0]));
+                }
             } else {
-                addSkillToTable(skill[1],skill[2],parseInt(skill[0])); // name,desc,id
-                addSkillToStudent(parseInt(skill[0]));
-                skill_ids.push(parseInt(skill[0]));
+                alert("in add skill");
+                addSkillWithoutCheck(skillName,skillDesc);
             }
         } else {
             alert("in add skill");
-            addSkillWithoutCheck(skillName,skillDesc);
-        }
-    } else {
-        alert("in add skill");
 
-        var url = baseURL + "/add_skill?" + "name=" + skillName + "&desc=" + skillDesc;
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("POST",url,false);
-        xmlhttp.onreadystatechange = function() {
-            if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
-                    var response = JSON.parse(xmlhttp.responseText);
-                    // use returned department_id
-                    // alert(response.skill_id);
-                    // skill_id = response.skill_id;
-                    addSkillToTable(skillName,skillDesc,response.skill_id);
-                    // add skill to student
-                    addSkillToStudent(response.skill_id);
-                    skill_ids.push(skill_id);
-            }
-        };
-        xmlhttp.send();
+            var url = baseURL + "/add_skill?" + "name=" + skillName + "&desc=" + skillDesc;
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("POST",url,false);
+            xmlhttp.onreadystatechange = function() {
+                if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+                        var response = JSON.parse(xmlhttp.responseText);
+                        // use returned department_id
+                        // alert(response.skill_id);
+                        // skill_id = response.skill_id;
+                        addSkillToTable(skillName,skillDesc,response.skill_id);
+                        // add skill to student
+                        addSkillToStudent(response.skill_id);
+                        skill_ids.push(response.skill_id);
+                }
+            };
+            xmlhttp.send();
+        }
+
+        document.getElementById("skill_name").value = "";
+        document.getElementById("skill_desc").value = "";
     }
 
-    document.getElementById("skill_name").value = "";
-    document.getElementById("skill_desc").value = "";
+   
 }
 
 function addSkillWithoutCheck(skillName,skillDesc){

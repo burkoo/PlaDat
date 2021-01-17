@@ -131,38 +131,44 @@ function addRequirement(){
     var reqName = document.getElementById("reqname").value;
     var reqDesc = document.getElementById("reqdesc").value;
 
-    // search skill if it exists
-    var req = searchSkill(reqName);
-
-    if(req[0] != "-1"){
-        alert("requirement exists 2nd version");
-        addReqToTable(req[1],req[2],parseInt(req[0])); // name,desc,id
-        addReqToJob(parseInt(req[0]));
+    if(reqName == ""){
+        alert("Requirement name must be given");
+    } else if (reqDesc == ""){
+        alert("Requirement description must be given");
     } else {
-        alert("requirement does not exist in database");
+        // search skill if it exists
+        var req = searchSkill(reqName);
 
-        var url = baseURL + "/add_skill?" + "name=" + reqName + "&desc=" + reqDesc;
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("POST",url,false);
-        xmlhttp.onreadystatechange = function() {
-            if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
-                    var response = JSON.parse(xmlhttp.responseText);
-                    // use returned department_id
-                    // alert(response.skill_id);
-                    // skill_id = response.skill_id;
-                    addReqToTable(reqName,reqDesc,response.skill_id);
-                    // add skill to student
-                    req[0] = response.skill_id;
-                    addReqToJob(response.skill_id);
-            }
-        };
-        xmlhttp.send();
+        if(req[0] != "-1"){
+            alert("requirement exists 2nd version");
+            addReqToTable(req[1],req[2],parseInt(req[0])); // name,desc,id
+            addReqToJob(parseInt(req[0]));
+        } else {
+            alert("requirement does not exist in database");
+
+            var url = baseURL + "/add_skill?" + "name=" + reqName + "&desc=" + reqDesc;
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("POST",url,false);
+            xmlhttp.onreadystatechange = function() {
+                if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+                        var response = JSON.parse(xmlhttp.responseText);
+                        // use returned department_id
+                        // alert(response.skill_id);
+                        // skill_id = response.skill_id;
+                        addReqToTable(reqName,reqDesc,response.skill_id);
+                        // add skill to student
+                        req[0] = response.skill_id;
+                        addReqToJob(response.skill_id);
+                }
+            };
+            xmlhttp.send();
+        }
+
+        req_ids.push(req[0]);
+
+        document.getElementById("reqname").value = "";
+        document.getElementById("reqdesc").value = "";
     }
-
-    req_ids.push(req[0]);
-
-    document.getElementById("reqname").value = "";
-    document.getElementById("reqdesc").value = "";
 }
 
 function addReqToTable(reqName,reqDesc,req_id){
